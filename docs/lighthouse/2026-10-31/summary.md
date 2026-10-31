@@ -19,3 +19,5 @@ Targets: Performance ≥ 95, Accessibility 100, Best Practices ≥ 95, SEO ≥ 9
 absolute to `/portfolio-site/` (GitHub Pages serves it for missing paths at any depth): served
 from `public/` they 404, so the stylesheet is missing (unstyled tap targets) and the console shows
 the failed requests. On the deployed site those URLs resolve.
+
+repos.report.html was re-run at 09:01, after the table fix in 287be21: 100 / 100 / 100 / 100.
