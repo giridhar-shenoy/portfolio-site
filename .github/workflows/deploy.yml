@@ -45,6 +45,7 @@ jobs:
           python3 scripts/check_public.py
           python3 scripts/check_todos.py --strict
           python3 scripts/check_numbers.py
+          python3 scripts/check_weight.py
           python3 scripts/check_links.py --strict
           html5validator --root public --log INFO
       - uses: actions/configure-pages@v5

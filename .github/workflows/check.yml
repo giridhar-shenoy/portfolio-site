@@ -24,6 +24,8 @@ jobs:
         run: |
           python3 scripts/build_repos.py --check
           python3 scripts/build_media.py --check
+      - name: Page weight (500 KB per page without video)
+        run: python3 scripts/check_weight.py
       - name: Numbers
         run: python3 scripts/check_numbers.py
       - name: TODO blocks (listed; they fail only the deploy)
