@@ -8,9 +8,8 @@ Slots: the 60 s Bot & Brew video (mp4 + poster + WebVTT captions) and the CV (PD
 "Watch 60 s" button follows the video (a TODO while the video is missing).
 """
 import argparse
-import json
-import shutil
-import subprocess
+import os
+import struct
 import sys
 
 from sitelib import PUBLIC, replace_block, write_or_check
@@ -23,16 +22,37 @@ VIDEO = {
 CV = "assets/cv/giridhar-shenoy-cv.pdf"
 
 
+def boxes(f, end):
+    """Yield (type, end offset) for each MP4 box from the current position up to ``end``; the
+    file is left at the start of the box's payload."""
+    while f.tell() + 8 <= end:
+        start = f.tell()
+        size, kind = struct.unpack(">I4s", f.read(8))
+        if size == 1:
+            size = struct.unpack(">Q", f.read(8))[0]
+        elif size == 0:
+            size = end - start
+        yield kind, start + size
+        f.seek(start + size)
+
+
 def video_size(path):
-    if not shutil.which("ffprobe"):
-        return None
-    out = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries",
-                          "stream=width,height", "-of", "json", str(path)], capture_output=True, text=True)
-    try:
-        s = json.loads(out.stdout)["streams"][0]
-        return s["width"], s["height"]
-    except (KeyError, IndexError, ValueError):
-        return None
+    """Width and height of the video track, read from the MP4's track header (moov/trak/tkhd),
+    so a local build and CI (which has no ffprobe) write the same attributes."""
+    with open(path, "rb") as f:
+        for kind, end in boxes(f, os.fstat(f.fileno()).st_size):
+            if kind != b"moov":
+                continue
+            for kind, trak_end in boxes(f, end):
+                if kind != b"trak":
+                    continue
+                for kind, box_end in boxes(f, trak_end):
+                    if kind == b"tkhd":
+                        f.seek(box_end - 8)  # tkhd ends with width and height, 16.16 fixed point
+                        w, h = struct.unpack(">II", f.read(8))
+                        if w and h:
+                            return w >> 16, h >> 16
+    return None
 
 
 def video_present():
