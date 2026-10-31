@@ -1,10 +1,14 @@
-# Publish public/ to GitHub Pages on every push to main, after the strict checks.
+# Publish the site to GitHub Pages on every push to main.
 #
 # Switched off until launch: the job runs only when the repository variable DEPLOY_ENABLED is
 # "true". Until then a push shows this workflow as skipped and nothing is built or published.
-# To launch: make this repo and the four project repos public, set Settings → Pages → Source to
-# "GitHub Actions", set the variable (gh variable set DEPLOY_ENABLED --body true), then push to
-# main or run this workflow from the Actions tab.
+# To launch: set Settings → Pages → Source to "GitHub Actions", set the variable
+# (gh variable set DEPLOY_ENABLED --body true), then push to main or run this workflow.
+#
+# TODOs never block a deploy: the checks run non-strict, as in check.yml; the TODO list goes to
+# the job summary; and what is published is _site/, the copy of public/ that
+# scripts/build_site.py writes with every class="todo" element (and whatever that leaves
+# empty) taken out.
 name: deploy
 
 on:
@@ -40,17 +44,33 @@ jobs:
         run: |
           python3 scripts/build_repos.py --check
           python3 scripts/build_media.py --check
-      - name: Strict checks
+      - name: Checks (non-strict, as in check.yml)
         run: |
-          python3 scripts/check_public.py
-          python3 scripts/check_todos.py --strict
+          python3 scripts/check_public.py --allow-private
           python3 scripts/check_numbers.py
           python3 scripts/check_weight.py
-          python3 scripts/check_links.py --strict
+          python3 scripts/check_links.py
           html5validator --root public --log INFO
+      - name: TODO list (to the job summary; left out of the published copy)
+        run: |
+          python3 scripts/check_todos.py | tee "$RUNNER_TEMP/todos.txt"
+          {
+            echo "### TODO blocks left out of the published site"
+            echo
+            echo '```text'
+            cat "$RUNNER_TEMP/todos.txt"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Build the published copy (public/ without the TODO blocks)
+        run: python3 scripts/build_site.py _site
+      - name: Check the published copy (no TODO left, links and HTML still valid)
+        run: |
+          SITE_ROOT=_site python3 scripts/check_todos.py --strict
+          SITE_ROOT=_site python3 scripts/check_links.py --no-external
+          html5validator --root _site --log INFO
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: public
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4

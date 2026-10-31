@@ -1,11 +1,13 @@
 """Shared helpers for the site scripts (standard library only)."""
 import json
+import os
 import re
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-PUBLIC = ROOT / "public"
+# SITE_ROOT=_site points the checks at the published copy that scripts/build_site.py writes.
+PUBLIC = ROOT / os.environ.get("SITE_ROOT", "public")
 DATA = ROOT / "data" / "repos.json"
 # GitHub Pages project site; the deploy workflow publishes public/ here.
 BASE_URL = "https://giridhar-shenoy.github.io/portfolio-site/"

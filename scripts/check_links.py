@@ -1,7 +1,7 @@
 """Check every link on every page: internal files and #anchors, and external URLs (HEAD, then GET).
 
   python3 scripts/check_links.py                 # local and CI: private-repo 404s are expected
-  python3 scripts/check_links.py --strict        # deploy: a private-repo 404 is a failure too
+  python3 scripts/check_links.py --strict        # a private-repo 404 is a failure too
   python3 scripts/check_links.py --no-external   # offline: internal links and anchors only
 
 While the repos are private, their GitHub URLs (and CI badges) return 404 to an anonymous

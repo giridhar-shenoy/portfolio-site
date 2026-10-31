@@ -295,3 +295,40 @@ the checks. Decisions below were taken without waiting, as the task asked.
    linking to its commit. Not done by me (deletion on GitHub, not asked for): delete those runs
    and ask GitHub Support to remove the unreachable commits; the commands are in
    ~/work/FLIP_BACK.md.
+3. **The deploy no longer depends on TODOs.** `scripts/build_site.py` (new, standard library)
+   writes `_site/`, a copy of `public/` without any element with class `todo`; the deploy
+   uploads `_site/`, not `public/`. The deploy's checks are the non-strict ones from
+   `check.yml` (`check_public.py --allow-private`, `check_links.py` without `--strict`,
+   numbers, weight, html5validator), and the `check_todos.py` list goes to the job summary.
+   The published copy is then checked: `check_todos.py --strict` on it (it must have none, so
+   this only fails if the stripping breaks), internal links, html5validator. `check.yml` runs
+   the same published-copy step, so a push shows what a deploy would publish. `SITE_ROOT=_site`
+   (one line in `sitelib.py`) points a check at the copy. The `DEPLOY_ENABLED` gate is kept.
+4. **Whatever the stripping leaves empty goes too**: a heading with nothing under it before the
+   next heading of the same or a higher level (or the end of its parent), and an element that
+   held a TODO and now holds nothing. Without this, the published Bot & Brew page would have
+   kept the video heading and three empty post-mortem headings, and Home an empty `<p>` where
+   the CV line was. Pages without a TODO are copied byte for byte (404, repos, Orangewood).
+5. **Markup only, no text, on Bot & Brew**: each post-mortem heading and its content now sit in
+   a `<section>`, so the rule knows where a section ends. Otherwise "What transferred to my
+   engineering" would have kept the Entrepreneur First aside as its content.
+6. **Two pieces of existing text depend on the video and now follow it** (build_media.py slots,
+   restored verbatim when the three files exist): the Home "Watch 60 s" button, a TODO while
+   the video is missing (its `#video` target is not on the published page; the Home "Bot &
+   Brew" heading goes with it, as nothing is left under it), and the clause "; the video above
+   is that cycle", left out while the video is missing. Checked both ways in a scratch
+   worktree: with empty placeholder files for the video and CV, the button, the clause and the
+   CV link come back exactly as before, and the published Bot & Brew page keeps the video
+   section without the 2-minute link (still a TODO).
+   Published now: Bot & Brew = title, intro, "What the kiosk did" with its sentence, "What
+   failed, commercial" with its sentence, the Entrepreneur First aside. Home = everything
+   except the CV line and the Bot & Brew heading and button.
+7. **Your CV file**: `public/assets/cv/giridhar-shenoy-cv.pdf` appeared untracked at 00:55. Not
+   committed and not opened (text and scripts only; the task treats the CV as missing). The
+   generated blocks were written in a clean worktree, so they match what CI and the deploy see.
+   In this working tree, while that file is present, `build_media.py --check` reports
+   `index.html` stale and `build_media.py` would add the CV link. To publish it: `git add` the
+   PDF, run `scripts/build_media.py`, commit.
+8. **Not changed, page text**: the Bot & Brew description and Open Graph description still say
+   "a fully autonomous latte cycle on video, what failed, and what transferred"; the published
+   page has neither the video nor those sections yet.

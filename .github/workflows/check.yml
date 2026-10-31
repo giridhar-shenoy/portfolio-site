@@ -28,7 +28,7 @@ jobs:
         run: python3 scripts/check_weight.py
       - name: Numbers
         run: python3 scripts/check_numbers.py
-      - name: TODO blocks (listed; they fail only the deploy)
+      - name: TODO blocks (listed; the deploy leaves them out of the published copy)
         run: python3 scripts/check_todos.py
       - name: Links (private-repo 404s are expected until the repos are public)
         run: python3 scripts/check_links.py
@@ -36,3 +36,9 @@ jobs:
         run: python3 scripts/check_public.py --allow-private
       - name: HTML5 validation
         run: html5validator --root public --log INFO
+      - name: Published copy (what the deploy uploads; TODO blocks taken out)
+        run: |
+          python3 scripts/build_site.py _site
+          SITE_ROOT=_site python3 scripts/check_todos.py --strict
+          SITE_ROOT=_site python3 scripts/check_links.py --no-external
+          html5validator --root _site --log INFO

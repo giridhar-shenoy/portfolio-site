@@ -1,7 +1,9 @@
 """List every element with class "todo" on every page.
 
   python3 scripts/check_todos.py            # list them; exit 0
-  python3 scripts/check_todos.py --strict   # list them; exit 1 if there are any (deploy)
+  python3 scripts/check_todos.py --strict   # list them; exit 1 if there are any (CI and the
+                                            # deploy run it on the published copy, which
+                                            # must have none: SITE_ROOT=_site)
 """
 import argparse
 import re

@@ -1,7 +1,7 @@
 """Check that every repo the site links to, and the site repo itself, is publicly visible.
 
-  python3 scripts/check_public.py                  # strict (deploy): exit 1 unless all are public
-  python3 scripts/check_public.py --allow-private  # local builds: print what it found, exit 0
+  python3 scripts/check_public.py                  # strict: exit 1 unless all are public
+  python3 scripts/check_public.py --allow-private  # local, CI and deploy: print what it found, exit 0
 
 It asks the GitHub API without a token, i.e. as an anonymous reader would: a private repo looks
 exactly like a missing one (HTTP 404).
