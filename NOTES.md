@@ -355,3 +355,144 @@ the checks. Decisions below were taken without waiting, as the task asked.
     including the published-copy step; the job then failed at `actions/configure-pages@v5`
     (`enablement: false`) because Pages is not enabled. That is expected until Pages is
     switched on; nothing was uploaded or published. `check` on fcafa99: success.
+
+### Checks (run 1 Nov after the step 4 commit, output pasted as produced)
+
+Local checks on the working tree at 1024f4d, then the published copy (`_site/`), the visibility
+print and the history count, then the generated-block check in a clean worktree. In this working
+tree, `build_media.py --check` reports `index.html` STALE only because of the untracked CV file
+(decision 7).
+
+```text
+$ .venv/bin/html5validator --root public --log INFO
+INFO:html5validator.cli:Files to validate: 
+  public/404.html
+  public/index.html
+  public/repos.html
+  public/work/orangewood-controls.html
+  public/work/bot-and-brew.html
+INFO:html5validator.cli:Number of files: 5
+INFO:html5validator.validator:All good.
+exit 0
+
+$ python3 scripts/check_links.py
+internal: 70 links and anchors checked, 0 broken
+not checked: mailto:giridharjshenoy@gmail.com
+external: 12 URLs: 11 ok, 0 expected 404 until Sunday (private repos), 1 warnings, 0 failed
+  ok: 200  https://github.com/giridhar-shenoy  (404.html:38, index.html:96, repos.html:79, work/bot-and-brew.html:94, work/orangewood-controls.html:54)
+  ok: 200  https://github.com/giridhar-shenoy/pointcloud-constrained-planning  (index.html:63, repos.html:58)
+  ok: 200  https://github.com/giridhar-shenoy/pointcloud-constrained-planning/actions/workflows/ci.yml  (repos.html:61)
+  ok: 200  https://github.com/giridhar-shenoy/pointcloud-constrained-planning/actions/workflows/ci.yml/badge.svg?branch=main  (repos.html:61)
+  ok: 200  https://github.com/giridhar-shenoy/sim-demo-to-policy  (index.html:71, repos.html:64)
+  ok: 200  https://github.com/giridhar-shenoy/sim-demo-to-policy/actions/workflows/ci.yml  (repos.html:67)
+  ok: 200  https://github.com/giridhar-shenoy/sim-demo-to-policy/actions/workflows/ci.yml/badge.svg?branch=main  (repos.html:67)
+  ok: 200  https://github.com/giridhar-shenoy/ur5e-teaching-controllers  (index.html:55, repos.html:52, work/orangewood-controls.html:47)
+  ok: 200  https://github.com/giridhar-shenoy/ur5e-teaching-controllers/actions/workflows/ci.yml  (repos.html:55)
+  ok: 200  https://github.com/giridhar-shenoy/ur5e-teaching-controllers/actions/workflows/ci.yml/badge.svg?branch=main  (repos.html:55)
+  ok: 200  https://www.ycombinator.com/companies/orangewood-labs  (work/orangewood-controls.html:44)
+  warning (host blocks automated requests): 999  https://www.linkedin.com/in/giridhar-j-shenoy/  (404.html:39, index.html:97, repos.html:80, work/bot-and-brew.html:95, work/orangewood-controls.html:55)
+exit 0
+
+$ python3 scripts/check_numbers.py
+Allowed digits outside TODO blocks (page · text · why · count):
+  404.html · © 2026 · footer copyright line · 1
+  index.html · 30 · number: the production arms · 1
+  index.html · MoveIt 2 · name · 1
+  index.html · ROS 2 · name · 5
+  index.html · UR5e · name · 3
+  index.html · ros2_control · name · 1
+  index.html · ur5e-teaching-controllers · repo name · 1
+  index.html · © 2026 · footer copyright line · 1
+  repos.html · MoveIt 2 · name · 2
+  repos.html · ROS 2 · name · 3
+  repos.html · UR5e · name · 2
+  repos.html · ros2_control · name · 2
+  repos.html · ur5e-teaching-controllers · repo name · 1
+  repos.html · © 2026 · footer copyright line · 1
+  work/bot-and-brew.html · February 2026 · number: Bot & Brew wound down · 1
+  work/bot-and-brew.html · ROS 2 · name · 1
+  work/bot-and-brew.html · © 2026 · footer copyright line · 1
+  work/orangewood-controls.html · 30 · number: the production arms · 1
+  work/orangewood-controls.html · 6-axis · verbatim Orangewood paragraph · 3
+  work/orangewood-controls.html · ROS 2 · name · 1
+  work/orangewood-controls.html · UR5e · name · 3
+  work/orangewood-controls.html · ur5e-teaching-controllers · repo name · 1
+  work/orangewood-controls.html · © 2026 · footer copyright line · 1
+Digits inside TODO blocks (page · token · count):
+  index.html · 60 · 1
+  work/bot-and-brew.html · 60-second · 1
+  work/bot-and-brew.html · public/assets/video/bot-and-brew-60s-poster.jpg · 1
+  work/bot-and-brew.html · public/assets/video/bot-and-brew-60s.en.vtt · 1
+  work/bot-and-brew.html · public/assets/video/bot-and-brew-60s.mp4 · 1
+Disallowed numbers: 0
+exit 0
+
+$ python3 scripts/check_todos.py
+index.html:47: TODO CV (PDF): add public/assets/cv/giridhar-shenoy-cv.pdf, then run scripts/build_media.py.
+index.html:81: TODO The "Watch 60 s" button goes here once the video is added (scripts/build_media.py).
+work/bot-and-brew.html:48: TODO The 60-second video goes here. Missing files: public/assets/video/bot-and-brew-60s.mp4 public/assets/video/bot-and-brew-60s-poster.jpg public/assets/video/bot-and-brew-60s.en.vtt Add them (raw footage can go in public/assets/video/src/ for scripts/optimize_media.sh), then run scripts/build_media.py.
+work/bot-and-brew.html:57: TODO Link to the longer version (YouTube, unlisted): URL not available yet.
+work/bot-and-brew.html:63: TODO For Giri to write: what the kiosk did, step by step; the hardware; the control and sensing stack.
+work/bot-and-brew.html:68: TODO For Giri to write: what failed technically, and how each failure showed up.
+work/bot-and-brew.html:74: TODO For Giri to write: why it was not deployed, and why the company wound down.
+work/bot-and-brew.html:79: TODO For Giri to write.
+work/bot-and-brew.html:84: TODO For Giri to write.
+9 TODO block(s)
+exit 0
+
+$ python3 scripts/check_weight.py
+404.html: 8.4 KB (ok) = html 1 KB + favicon.png 0 KB, site.css 6 KB
+index.html: 37.3 KB (ok) = html 6 KB + favicon.png 0 KB, site.webmanifest 0 KB, site.css 6 KB, ur5e-teaching-controllers.webp 7 KB, pointcloud-constrained-planning.webp 10 KB, sim-demo-to-policy.webp 5 KB
+repos.html: 12.5 KB (ok) = html 5 KB + favicon.png 0 KB, site.webmanifest 0 KB, site.css 6 KB
+work/bot-and-brew.html: 11.5 KB (ok) = html 4 KB + favicon.png 0 KB, site.webmanifest 0 KB, site.css 6 KB
+work/orangewood-controls.html: 10.4 KB (ok) = html 3 KB + favicon.png 0 KB, site.webmanifest 0 KB, site.css 6 KB
+exit 0
+
+$ python3 scripts/build_site.py
+404.html: no TODO, copied unchanged
+index.html: removed 2 TODO block(s), 1 heading(s) left empty, 1 element(s) left empty
+repos.html: no TODO, copied unchanged
+work/bot-and-brew.html: removed 7 TODO block(s), 4 heading(s) left empty, 4 element(s) left empty
+work/orangewood-controls.html: no TODO, copied unchanged
+wrote _site
+exit 0
+
+$ SITE_ROOT=_site python3 scripts/check_todos.py --strict
+0 TODO block(s)
+exit 0
+
+$ SITE_ROOT=_site python3 scripts/check_links.py --no-external
+internal: 70 links and anchors checked, 0 broken
+not checked: mailto:giridharjshenoy@gmail.com
+external: 12 URLs not checked (--no-external)
+exit 0
+
+$ .venv/bin/html5validator --root _site --log INFO
+INFO:html5validator.cli:Files to validate: 
+  _site/404.html
+  _site/index.html
+  _site/repos.html
+  _site/work/orangewood-controls.html
+  _site/work/bot-and-brew.html
+INFO:html5validator.cli:Number of files: 5
+INFO:html5validator.validator:All good.
+exit 0
+
+$ python3 scripts/check_public.py --allow-private
+    public  giridhar-shenoy/ur5e-teaching-controllers
+    public  giridhar-shenoy/pointcloud-constrained-planning
+    public  giridhar-shenoy/sim-demo-to-policy
+    public  giridhar-shenoy/portfolio-site
+all public
+exit 0
+
+$ git log -p --all | grep -ci <the word from step 1>
+0
+
+$ # clean worktree of 1024f4d (no untracked files, as in CI)
+$ python3 scripts/build_repos.py --check && python3 scripts/build_media.py --check
+up to date: public/index.html
+up to date: public/repos.html
+up to date: public/work/bot-and-brew.html
+exit 0
+```
