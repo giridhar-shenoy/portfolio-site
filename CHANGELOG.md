@@ -29,3 +29,8 @@ All notable changes to this site are documented here. The format follows
   `_site/` too.
 - The Home "Watch 60 s" button and the Bot & Brew clause that points at the player follow the
   video file, like the player itself.
+
+### Removed
+
+- humanoid-upper-body-retargeting from the Home cards and the Repos table (it stays private),
+  with its GIF and still.

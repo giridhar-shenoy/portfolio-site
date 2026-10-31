@@ -332,3 +332,14 @@ the checks. Decisions below were taken without waiting, as the task asked.
 8. **Not changed, page text**: the Bot & Brew description and Open Graph description still say
    "a fully autonomous latte cycle on video, what failed, and what transferred"; the published
    page has neither the video nor those sections yet.
+9. **humanoid-upper-body-retargeting removed from the site**: its entry in `data/repos.json`,
+   rebuilt with `build_repos.py` (no `--refresh-heroes`, so the other three heroes and their
+   recorded commits are unchanged). The Home cards and the Repos table now list exactly
+   ur5e-teaching-controllers, pointcloud-constrained-planning and sim-demo-to-policy. Its GIF
+   and still were deleted from `public/assets/img/` too: nothing links to them any more, and
+   they would otherwise be published at a guessable URL while the repo stays private. Two
+   wording changes follow from the removal: the Repos page description and Open Graph
+   description drop "humanoid retargeting" from the list of topics, and the README's
+   `data/repos.json` row says "the repos on the site" instead of "the four repos". The Home
+   tagline and About paragraph ("humanoid planning and retargeting", "led planning for a
+   humanoid") describe the work, not the repo, and were not changed.

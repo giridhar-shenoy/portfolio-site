@@ -24,7 +24,7 @@ depth), so its stylesheet and links only resolve on the deployed site.
 | Path | What it is |
 |---|---|
 | `public/` | The site exactly as published: five pages, `robots.txt`, `sitemap.xml`, `site.webmanifest`, `assets/` |
-| `data/repos.json` | The four repos: one line, stack, hero GIF source and commit (schema below) |
+| `data/repos.json` | The repos on the site: one line, stack, hero GIF source and commit (schema below) |
 | `scripts/build_repos.py` | Writes the Home cards and the `repos.html` table from `data/repos.json`; `--refresh-heroes` copies the GIFs from the local clones |
 | `scripts/build_media.py` | Fills the video and CV slots: a TODO block while a file is missing, the player or link once it exists; the Home "Watch 60 s" button and the Bot & Brew clause that points at the player follow the video |
 | `scripts/build_site.py` | Writes `_site/`, the published copy: `public/` without the TODO blocks (see below) |

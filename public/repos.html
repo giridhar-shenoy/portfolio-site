@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Repos — Giridhar J Shenoy</title>
-<meta name="description" content="Giridhar J Shenoy's public robotics repositories: manipulator control, constrained motion planning, humanoid retargeting and imitation learning, all in simulation.">
+<meta name="description" content="Giridhar J Shenoy's public robotics repositories: manipulator control, constrained motion planning and imitation learning, all in simulation.">
 <link rel="canonical" href="https://giridhar-shenoy.github.io/portfolio-site/repos.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Giridhar J Shenoy">
 <meta property="og:title" content="Repos — Giridhar J Shenoy">
-<meta property="og:description" content="Public robotics repositories: manipulator control, constrained motion planning, humanoid retargeting and imitation learning, all in simulation.">
+<meta property="og:description" content="Public robotics repositories: manipulator control, constrained motion planning and imitation learning, all in simulation.">
 <meta property="og:url" content="https://giridhar-shenoy.github.io/portfolio-site/repos.html">
 <meta property="og:image" content="https://giridhar-shenoy.github.io/portfolio-site/assets/img/og.png">
 <meta property="og:image:width" content="1200">
@@ -59,12 +59,6 @@
 <td data-label="What it is">Keep-the-cup-upright constrained planning for a simulated UR5e through a shelf that MoveIt 2 only knows from an octomap built live from a simulated RGB-D camera, benchmarked against a pipeline written directly on OMPL, Pinocchio and coal.</td>
 <td data-label="Stack">C++ for the planning path (benchmark nodes, constraint builder, the direct pipeline); Python for launch, aggregation and plots. ROS 2 Lyrical, MoveIt 2 (MoveItCpp), OMPL, Pinocchio, coal, Gazebo Jetty.</td>
 <td class="ci" data-label="CI"><a href="https://github.com/giridhar-shenoy/pointcloud-constrained-planning/actions/workflows/ci.yml"><img src="https://github.com/giridhar-shenoy/pointcloud-constrained-planning/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI status" height="20" class="badge"></a></td>
-</tr>
-<tr>
-<td class="repo" data-label="Repo"><a href="https://github.com/giridhar-shenoy/humanoid-upper-body-retargeting">humanoid-<wbr>upper-<wbr>body-<wbr>retargeting</a></td>
-<td data-label="What it is">Webcam to Unitree G1 upper-body retargeting in MuJoCo: MediaPipe Pose, a One-Euro filter and analytic plus damped-least-squares IK on both arms, recordable as LeRobot datasets. The animation and current results come from a synthetic fixture until the webcam recording replaces them.</td>
-<td data-label="Stack">Python for orchestration, recording and benchmarks; C++ for the per-frame filter and IK core through pybind11. MuJoCo, MediaPipe, LeRobot; CPU only.</td>
-<td class="ci" data-label="CI"><a href="https://github.com/giridhar-shenoy/humanoid-upper-body-retargeting/actions/workflows/ci.yml"><img src="https://github.com/giridhar-shenoy/humanoid-upper-body-retargeting/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI status" height="20" class="badge"></a></td>
 </tr>
 <tr>
 <td class="repo" data-label="Repo"><a href="https://github.com/giridhar-shenoy/sim-demo-to-policy">sim-<wbr>demo-<wbr>to-<wbr>policy</a></td>

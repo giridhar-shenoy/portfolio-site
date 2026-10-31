@@ -34,22 +34,6 @@
       }
     },
     {
-      "name": "humanoid-upper-body-retargeting",
-      "url": "https://github.com/giridhar-shenoy/humanoid-upper-body-retargeting",
-      "one_line": "Webcam to Unitree G1 upper-body retargeting in MuJoCo: MediaPipe Pose, a One-Euro filter and analytic plus damped-least-squares IK on both arms, recordable as LeRobot datasets. The animation and current results come from a synthetic fixture until the webcam recording replaces them.",
-      "stack": "Python for orchestration, recording and benchmarks; C++ for the per-frame filter and IK core through pybind11. MuJoCo, MediaPipe, LeRobot; CPU only.",
-      "hero": {
-        "local_clone": "~/work/r3",
-        "source_path": "docs/assets/retarget_synthetic.gif",
-        "source_commit": "c32d36ad11020ad8c78b810c642dacc5eaa5dc8a",
-        "gif": "assets/img/humanoid-upper-body-retargeting.gif",
-        "still": "assets/img/humanoid-upper-body-retargeting.webp",
-        "still_width": 640,
-        "still_height": 274,
-        "alt": "Still from the hero GIF, made from a synthetic fixture (a scripted motion, not a person): the estimator skeleton and the MuJoCo Unitree G1 following it"
-      }
-    },
-    {
       "name": "sim-demo-to-policy",
       "url": "https://github.com/giridhar-shenoy/sim-demo-to-policy",
       "one_line": "A MuJoCo pick-and-place task on a Franka Panda: scripted demonstrations recorded as LeRobot datasets, ACT and a small from-scratch spatial-softmax BC policy trained on a laptop CPU, and an evaluation harness with held-out seeds, a failure taxonomy and confidence intervals.",
