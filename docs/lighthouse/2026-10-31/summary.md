@@ -20,4 +20,4 @@ absolute to `/portfolio-site/` (GitHub Pages serves it for missing paths at any 
 from `public/` they 404, so the stylesheet is missing (unstyled tap targets) and the console shows
 the failed requests. On the deployed site those URLs resolve.
 
-repos.report.html was re-run at 09:01, after the table fix in 287be21: 100 / 100 / 100 / 100.
+repos.report.html was re-run at 09:01, after the table fix in a95fee1: 100 / 100 / 100 / 100.

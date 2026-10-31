@@ -212,7 +212,7 @@ is no apt or pip Lighthouse). Reports and the score table: `docs/lighthouse/2026
 
 404 misses A11y/BP only locally: its `/portfolio-site/` URLs do not resolve from `public/`.
 Headless-Chrome screenshots at 412 px and 1280 px then showed the repos table breaking repo names
-one letter per line; fixed in 287be21 (rows become labelled blocks on phones). Re-run of repos.html after the fix (09:01): 100 / 100 / 100 / 100; a 412 px screenshot shows
+one letter per line; fixed in a95fee1 (rows become labelled blocks on phones). Re-run of repos.html after the fix (09:01): 100 / 100 / 100 / 100; a 412 px screenshot shows
 labelled blocks with whole repo names.
 
 ## TODOs on the site, by page
@@ -242,3 +242,56 @@ deploy.yml).
 ```bash
 cd ~/work/site && python3 -m http.server -d public 8000   # open http://localhost:8000/
 ```
+
+## Follow-up of 1 Nov 2026
+
+Task: remove from history the one NOTES.md line that named the excluded topic, make the deploy independent of
+TODOs, drop humanoid-upper-body-retargeting from the site, rewrite ~/work/FLIP_BACK.md, re-run
+the checks. Decisions below were taken without waiting, as the task asked.
+
+### State found at 00:58 IST, before any change
+
+- `portfolio-site` was already **PUBLIC** (the task assumed private), and the repository
+  variable `DEPLOY_ENABLED` was already `true` (set 2026-10-31T19:27:08Z). A `deploy` run
+  started by hand at 19:27Z failed in "Strict checks" on `check_public.py`
+  (`humanoid-upper-body-retargeting: not visible anonymously`). Pages itself was not enabled
+  (Pages API 404). Visibility of the others: ur5e-teaching-controllers, pointcloud-constrained-planning,
+  sim-demo-to-policy and giridhar-shenoy PUBLIC; humanoid-upper-body-retargeting and
+  piper-mit-teleop PRIVATE. 0 stars, 0 watchers, 0 forks.
+- I did not change visibility, Pages or `DEPLOY_ENABLED`. Because the variable is `true`, every
+  push below triggers the deploy job; with Pages off it stops at `configure-pages`, so nothing
+  is published.
+
+### Decisions taken (1 Nov)
+
+1. **History rewrite done as specified, although the repo was already public.** Removing the
+   word from the branch history is still the point. Backup first (bundle of all refs, kept only
+   in the session scratchpad), then git-filter-repo a40bce548d2c (pip, in `.venv`) with one
+   `--replace-text` rule: the exact line that started
+   `- **Not in the site, though the context block mentions it**:` (in ed98984, formerly
+   e865c64) becomes `(removed)`. The two continuation lines of that bullet were not part of
+   the rule and stay. Origin re-added, `main` force-pushed (`6ebceb0...4bfa75e (forced
+   update)`). Verification: the task's `git log -p --all | grep -ci` on the word → `0`; 14
+   commits; the tree of HEAD is unchanged (`693d2af` before and after); author and committer
+   dates are the original ones.
+   Commit IDs that changed (old → new):
+
+   | old | new | subject |
+   |---|---|---|
+   | e865c64 | ed98984 | docs: explain preview, repos.json, the TODO convention and deploy |
+   | 57cc255 | 8b8f002 | test: check page weight against the 500 KB budget |
+   | bb9a987 | 8371ee0 | docs: record unattended decisions and the changelog entry |
+   | b8eae52 | 6bb7bb1 | docs: paste the acceptance check output and the TODO list |
+   | 287be21 | a95fee1 | fix: keep repo names and the CI column readable in the repos table |
+   | ea91d0e | 5338d5b | docs: add the Lighthouse reports and scores for 31 Oct |
+   | 6ebceb0 | 4bfa75e | docs: re-run Lighthouse on the repos page after the table fix |
+
+   The two prose references to 287be21 (this file, `docs/lighthouse/2026-10-31/summary.md`)
+   now say a95fee1. The `git log` lines pasted under "Acceptance checks" keep the old IDs,
+   because they are output as produced on 31 Oct; use the table above to map them.
+2. **The old commits are still public by ID.** After the force-push, GitHub still serves
+   `e865c64` and `bb9a987` anonymously (`/commit/<id>` → HTTP 200), and the Actions tab of this
+   public repo lists 11 runs on the old IDs (e865c64, bb9a987, b8eae52, ea91d0e, 6ebceb0), each
+   linking to its commit. Not done by me (deletion on GitHub, not asked for): delete those runs
+   and ask GitHub Support to remove the unreachable commits; the commands are in
+   ~/work/FLIP_BACK.md.
