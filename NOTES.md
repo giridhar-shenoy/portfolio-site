@@ -343,3 +343,15 @@ the checks. Decisions below were taken without waiting, as the task asked.
    `data/repos.json` row says "the repos on the site" instead of "the four repos". The Home
    tagline and About paragraph ("humanoid planning and retargeting", "led planning for a
    humanoid") describe the work, not the repo, and were not changed.
+10. **~/work/FLIP_BACK.md rewritten** (a file, not in any repo): five repos public
+    (ur5e-teaching-controllers, pointcloud-constrained-planning, sim-demo-to-policy,
+    giridhar-shenoy, portfolio-site); humanoid-upper-body-retargeting and piper-mit-teleop not
+    flipped; CI re-runs with `gh workflow run ci.yml --ref main` (all three code repos have a
+    `workflow_dispatch` trigger; the site uses `check.yml`); the site launch steps (Pages source
+    "GitHub Actions", `DEPLOY_ENABLED`, `gh workflow run deploy.yml`, every sitemap URL → 200).
+    It also records the state found at 00:58 (the five already public, `DEPLOY_ENABLED` already
+    `true`), and adds an optional section for the old-commit runs from decision 2.
+11. **The deploy after these commits (run on fcafa99)**: every check step passed on GitHub,
+    including the published-copy step; the job then failed at `actions/configure-pages@v5`
+    (`enablement: false`) because Pages is not enabled. That is expected until Pages is
+    switched on; nothing was uploaded or published. `check` on fcafa99: success.
