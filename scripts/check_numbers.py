@@ -84,7 +84,7 @@ def main():
     for page in pages():
         rel = page.relative_to(PUBLIC).as_posix()
         p = Text()
-        p.feed(page.read_text(encoding="utf-8"))
+        p.feed(page.read_text(encoding="utf-8").replace("<wbr>", ""))  # keep names whole
         for line, text, todo in p.chunks:
             text = re.sub(r"\s+", " ", text)
             if todo:
