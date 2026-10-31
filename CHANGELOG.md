@@ -29,6 +29,13 @@ All notable changes to this site are documented here. The format follows
   `_site/` too.
 - The Home "Watch 60 s" button and the Bot & Brew clause that points at the player follow the
   video file, like the player itself.
+- Bot & Brew page: the author's text from `content/bot-and-brew.md` (intro, video caption,
+  "What the kiosk did", Entrepreneur First paragraph), the 60 s video at 2× speed with poster
+  and captions, and the link to the full-length version; no TODO blocks left on the site.
+- Home links the CV (PDF).
+- `optimize_media.sh --video SRC` makes the 60 s clip, its poster and captions from the
+  full-length video; `check_numbers.py` allows the facts stated in `content/bot-and-brew.md`
+  on the Bot & Brew page.
 
 ### Removed
 
