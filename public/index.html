@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Giridhar J Shenoy — robotics engineer</title>
+<meta name="description" content="Robotics engineer working on manipulator control, motion planning and ROS 2 systems, moving into learning-based manipulation. Public code and two case studies.">
+<link rel="canonical" href="https://giridhar-shenoy.github.io/portfolio-site/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Giridhar J Shenoy">
+<meta property="og:title" content="Giridhar J Shenoy — robotics engineer">
+<meta property="og:description" content="Manipulator control and ROS 2 systems, moving into learning-based manipulation. Public code and two case studies.">
+<meta property="og:url" content="https://giridhar-shenoy.github.io/portfolio-site/">
+<meta property="og:image" content="https://giridhar-shenoy.github.io/portfolio-site/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Giridhar J Shenoy, robotics engineer: manipulator control and ROS 2 systems">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#1f4e79">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="wrap">
+<a class="site-name" href="./">Giridhar J Shenoy</a>
+<nav class="site-nav" aria-label="Site">
+<ul>
+<li><a href="./" aria-current="page">Home</a></li>
+<li><a href="repos.html">Repos</a></li>
+<li><a href="work/orangewood-controls.html">Orangewood controls</a></li>
+<li><a href="work/bot-and-brew.html">Bot &amp; Brew</a></li>
+</ul>
+</nav>
+</div>
+</header>
+
+<main id="main" class="wrap">
+<h1>Giridhar J Shenoy</h1>
+<p class="tagline">Robotics engineer — manipulator control and ROS 2 systems. Controllers running on 30 production arms; humanoid planning and retargeting; moving into learning-based manipulation.</p>
+
+<h2 id="about">About</h2>
+<p>I build the control and planning layers of robot manipulators: real-time controllers, motion planning on perception data, and the ROS 2 systems that hold them together, and I am moving into learning-based manipulation. I have shipped controllers on production industrial arms, led planning for a humanoid, and founded and wound down a robotics company. I'm based in Bengaluru and open to engineering seats at robotics companies and research-engineer seats in labs alike. <a href="mailto:giridharjshenoy@gmail.com">giridharjshenoy@gmail.com</a>.</p>
+<p><!-- build_media:cv:begin --><span class="todo">CV (PDF): add <code>public/assets/cv/giridhar-shenoy-cv.pdf</code>, then run <code>scripts/build_media.py</code>.</span><!-- build_media:cv:end --></p>
+
+<h2 id="code">Public code</h2>
+<!-- build_repos:cards:begin -->
+<ul class="cards">
+<li class="card">
+<img src="assets/img/ur5e-teaching-controllers.webp" width="640" height="480" alt="Still from the hero GIF: a simulated UR5e in Gazebo switching between trajectory tracking and gravity-compensated hand guiding" decoding="async">
+<div class="body">
+<h3><a href="https://github.com/giridhar-shenoy/ur5e-teaching-controllers">ur5e-teaching-controllers</a></h3>
+<p>ros2_control effort controllers for a simulated UR5e: joint-space tracking (PID, PID with RNEA feedforward, computed torque) on Pinocchio or KDL dynamics, gravity-compensated hand guiding with a runtime payload model, and damped-least-squares TCP jogging.</p>
+<p class="more"><a href="assets/img/ur5e-teaching-controllers.gif">Animated GIF</a></p>
+</div>
+</li>
+<li class="card">
+<img src="assets/img/pointcloud-constrained-planning.webp" width="640" height="240" alt="Still from the hero GIF: the same shelf query planned without a constraint (left) and with the keep-upright constraint (right)" loading="lazy" decoding="async">
+<div class="body">
+<h3><a href="https://github.com/giridhar-shenoy/pointcloud-constrained-planning">pointcloud-constrained-planning</a></h3>
+<p>Keep-the-cup-upright constrained planning for a simulated UR5e through a shelf that MoveIt 2 only knows from an octomap built live from a simulated RGB-D camera, benchmarked against a pipeline written directly on OMPL, Pinocchio and coal.</p>
+<p class="more"><a href="assets/img/pointcloud-constrained-planning.gif">Animated GIF</a></p>
+</div>
+</li>
+<li class="card">
+<img src="assets/img/humanoid-upper-body-retargeting.webp" width="640" height="274" alt="Still from the hero GIF, made from a synthetic fixture (a scripted motion, not a person): the estimator skeleton and the MuJoCo Unitree G1 following it" loading="lazy" decoding="async">
+<div class="body">
+<h3><a href="https://github.com/giridhar-shenoy/humanoid-upper-body-retargeting">humanoid-upper-body-retargeting</a></h3>
+<p>Webcam to Unitree G1 upper-body retargeting in MuJoCo: MediaPipe Pose, a One-Euro filter and analytic plus damped-least-squares IK on both arms, recordable as LeRobot datasets. The animation and current results come from a synthetic fixture until the webcam recording replaces them.</p>
+<p class="more"><a href="assets/img/humanoid-upper-body-retargeting.gif">Animated GIF</a></p>
+</div>
+</li>
+<li class="card">
+<img src="assets/img/sim-demo-to-policy.webp" width="640" height="158" alt="Still from the hero GIF: the scripted expert and the smallbc policy on a held-out seed, and smallbc on a shifted-box seed" loading="lazy" decoding="async">
+<div class="body">
+<h3><a href="https://github.com/giridhar-shenoy/sim-demo-to-policy">sim-demo-to-policy</a></h3>
+<p>A MuJoCo pick-and-place task on a Franka Panda: scripted demonstrations recorded as LeRobot datasets, ACT and a small from-scratch spatial-softmax BC policy trained on a laptop CPU, and an evaluation harness with held-out seeds, a failure taxonomy and confidence intervals.</p>
+<p class="more"><a href="assets/img/sim-demo-to-policy.gif">Animated GIF</a></p>
+</div>
+</li>
+</ul>
+<!-- build_repos:cards:end -->
+
+<h2 id="bot-and-brew">Bot &amp; Brew</h2>
+<p><a class="button" href="work/bot-and-brew.html#video">Watch 60 s</a></p>
+
+<h2 id="more">More</h2>
+<ul class="link-list">
+<li><a href="repos.html">Repos: what each one is, its stack and CI status</a></li>
+<li><a href="work/orangewood-controls.html">Case study: manipulator controllers at Orangewood Labs</a></li>
+<li><a href="work/bot-and-brew.html">Case study: Bot &amp; Brew, an engineering post-mortem</a></li>
+</ul>
+</main>
+
+<footer class="site-footer">
+<div class="wrap">
+<ul>
+<li><a href="mailto:giridharjshenoy@gmail.com">giridharjshenoy@gmail.com</a></li>
+<li><a href="https://github.com/giridhar-shenoy">GitHub</a></li>
+<li><a href="https://www.linkedin.com/in/giridhar-j-shenoy/">LinkedIn</a></li>
+</ul>
+<p>Written content © 2026 Giridhar J Shenoy, all rights reserved. Site code under the MIT license.</p>
+</div>
+</footer>
+</body>
+</html>

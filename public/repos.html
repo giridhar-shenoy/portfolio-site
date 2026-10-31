@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Repos — Giridhar J Shenoy</title>
+<meta name="description" content="Giridhar J Shenoy's public robotics repositories: manipulator control, constrained motion planning, humanoid retargeting and imitation learning, all in simulation.">
+<link rel="canonical" href="https://giridhar-shenoy.github.io/portfolio-site/repos.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Giridhar J Shenoy">
+<meta property="og:title" content="Repos — Giridhar J Shenoy">
+<meta property="og:description" content="Public robotics repositories: manipulator control, constrained motion planning, humanoid retargeting and imitation learning, all in simulation.">
+<meta property="og:url" content="https://giridhar-shenoy.github.io/portfolio-site/repos.html">
+<meta property="og:image" content="https://giridhar-shenoy.github.io/portfolio-site/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Giridhar J Shenoy, robotics engineer: manipulator control and ROS 2 systems">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#1f4e79">
+<link rel="icon" href="assets/img/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header">
+<div class="wrap">
+<a class="site-name" href="./">Giridhar J Shenoy</a>
+<nav class="site-nav" aria-label="Site">
+<ul>
+<li><a href="./">Home</a></li>
+<li><a href="repos.html" aria-current="page">Repos</a></li>
+<li><a href="work/orangewood-controls.html">Orangewood controls</a></li>
+<li><a href="work/bot-and-brew.html">Bot &amp; Brew</a></li>
+</ul>
+</nav>
+</div>
+</header>
+
+<main id="main" class="wrap">
+<h1>Repos</h1>
+<p>Everything here runs in simulation. Each README says how to run it and where it fails.</p>
+<!-- build_repos:table:begin -->
+<div class="table-scroll">
+<table>
+<thead>
+<tr><th scope="col">Repo</th><th scope="col">What it is</th><th scope="col">Stack</th><th scope="col">CI</th></tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/giridhar-shenoy/ur5e-teaching-controllers">ur5e-teaching-controllers</a></td>
+<td>ros2_control effort controllers for a simulated UR5e: joint-space tracking (PID, PID with RNEA feedforward, computed torque) on Pinocchio or KDL dynamics, gravity-compensated hand guiding with a runtime payload model, and damped-least-squares TCP jogging.</td>
+<td>C++ for the control loop (controllers, dynamics backends); Python for orchestration and plots. ROS 2 Lyrical, ros2_control, Gazebo Jetty, Pinocchio, KDL.</td>
+<td><a href="https://github.com/giridhar-shenoy/ur5e-teaching-controllers/actions/workflows/ci.yml"><img src="https://github.com/giridhar-shenoy/ur5e-teaching-controllers/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI status of ur5e-teaching-controllers" height="20" class="badge"></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/giridhar-shenoy/pointcloud-constrained-planning">pointcloud-constrained-planning</a></td>
+<td>Keep-the-cup-upright constrained planning for a simulated UR5e through a shelf that MoveIt 2 only knows from an octomap built live from a simulated RGB-D camera, benchmarked against a pipeline written directly on OMPL, Pinocchio and coal.</td>
+<td>C++ for the planning path (benchmark nodes, constraint builder, the direct pipeline); Python for launch, aggregation and plots. ROS 2 Lyrical, MoveIt 2 (MoveItCpp), OMPL, Pinocchio, coal, Gazebo Jetty.</td>
+<td><a href="https://github.com/giridhar-shenoy/pointcloud-constrained-planning/actions/workflows/ci.yml"><img src="https://github.com/giridhar-shenoy/pointcloud-constrained-planning/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI status of pointcloud-constrained-planning" height="20" class="badge"></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/giridhar-shenoy/humanoid-upper-body-retargeting">humanoid-upper-body-retargeting</a></td>
+<td>Webcam to Unitree G1 upper-body retargeting in MuJoCo: MediaPipe Pose, a One-Euro filter and analytic plus damped-least-squares IK on both arms, recordable as LeRobot datasets. The animation and current results come from a synthetic fixture until the webcam recording replaces them.</td>
+<td>Python for orchestration, recording and benchmarks; C++ for the per-frame filter and IK core through pybind11. MuJoCo, MediaPipe, LeRobot; CPU only.</td>
+<td><a href="https://github.com/giridhar-shenoy/humanoid-upper-body-retargeting/actions/workflows/ci.yml"><img src="https://github.com/giridhar-shenoy/humanoid-upper-body-retargeting/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI status of humanoid-upper-body-retargeting" height="20" class="badge"></a></td>
+</tr>
+<tr>
+<td><a href="https://github.com/giridhar-shenoy/sim-demo-to-policy">sim-demo-to-policy</a></td>
+<td>A MuJoCo pick-and-place task on a Franka Panda: scripted demonstrations recorded as LeRobot datasets, ACT and a small from-scratch spatial-softmax BC policy trained on a laptop CPU, and an evaluation harness with held-out seeds, a failure taxonomy and confidence intervals.</td>
+<td>Python only: the imitation-learning stack is Python. MuJoCo, LeRobot, PyTorch; CPU only.</td>
+<td><a href="https://github.com/giridhar-shenoy/sim-demo-to-policy/actions/workflows/ci.yml"><img src="https://github.com/giridhar-shenoy/sim-demo-to-policy/actions/workflows/ci.yml/badge.svg?branch=main" alt="CI status of sim-demo-to-policy" height="20" class="badge"></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- build_repos:table:end -->
+</main>
+
+<footer class="site-footer">
+<div class="wrap">
+<ul>
+<li><a href="mailto:giridharjshenoy@gmail.com">giridharjshenoy@gmail.com</a></li>
+<li><a href="https://github.com/giridhar-shenoy">GitHub</a></li>
+<li><a href="https://www.linkedin.com/in/giridhar-j-shenoy/">LinkedIn</a></li>
+</ul>
+<p>Written content © 2026 Giridhar J Shenoy, all rights reserved. Site code under the MIT license.</p>
+</div>
+</footer>
+</body>
+</html>
