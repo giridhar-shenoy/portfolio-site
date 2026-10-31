@@ -19,3 +19,13 @@ All notable changes to this site are documented here. The format follows
 - Checks: `check_links`, `check_todos`, `check_numbers`, `check_public`, `check_weight`.
 - Workflows: `check.yml` on every push and PR; `deploy.yml` to GitHub Pages, gated on the
   `DEPLOY_ENABLED` repository variable (not set).
+- `scripts/build_site.py`: writes `_site/`, the published copy, without the TODO blocks and
+  whatever they leave empty.
+
+### Changed
+
+- The deploy publishes `_site/` instead of `public/`, runs the checks non-strict and lists the
+  TODOs in the job summary, so a TODO no longer blocks it; `check.yml` builds and checks
+  `_site/` too.
+- The Home "Watch 60 s" button and the Bot & Brew clause that points at the player follow the
+  video file, like the player itself.

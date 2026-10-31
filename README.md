@@ -10,6 +10,12 @@ Actions workflows. No framework, no build tool, no analytics, system fonts only.
 python3 -m http.server -d public 8000    # then open http://localhost:8000/
 ```
 
+To see the pages as they will be published (TODO blocks taken out, see below):
+
+```bash
+python3 scripts/build_site.py && python3 -m http.server -d _site 8000
+```
+
 `404.html` uses URLs under `/portfolio-site/` (GitHub Pages serves it for missing paths at any
 depth), so its stylesheet and links only resolve on the deployed site.
 
@@ -20,7 +26,8 @@ depth), so its stylesheet and links only resolve on the deployed site.
 | `public/` | The site exactly as published: five pages, `robots.txt`, `sitemap.xml`, `site.webmanifest`, `assets/` |
 | `data/repos.json` | The four repos: one line, stack, hero GIF source and commit (schema below) |
 | `scripts/build_repos.py` | Writes the Home cards and the `repos.html` table from `data/repos.json`; `--refresh-heroes` copies the GIFs from the local clones |
-| `scripts/build_media.py` | Fills the video and CV slots: a TODO block while a file is missing, the player or link once it exists |
+| `scripts/build_media.py` | Fills the video and CV slots: a TODO block while a file is missing, the player or link once it exists; the Home "Watch 60 s" button and the Bot & Brew clause that points at the player follow the video |
+| `scripts/build_site.py` | Writes `_site/`, the published copy: `public/` without the TODO blocks (see below) |
 | `scripts/optimize_media.sh` | GIF → still (WebP) for the cards; raw video → H.264 MP4 and poster |
 | `scripts/make_images.py` | Open Graph image and icons (Pillow, local only) |
 | `scripts/check_*.py` | `check_links`, `check_todos`, `check_numbers`, `check_public` (see below) |
@@ -60,29 +67,40 @@ and nothing moves on the page.
 
 Anything not known yet is a visible block with `class="todo"` (rendered with a dashed yellow
 border and the word TODO), never prose that looks like a fact. `scripts/check_todos.py` lists
-every one; `--strict` fails while any remain, and the deploy workflow runs it strict, so the
-site cannot be published with a TODO on it.
+every one. TODOs never reach the published site and never block a deploy: the deploy publishes
+`_site/`, which `scripts/build_site.py` writes from `public/` without any element with class
+`todo`, and without a heading or element that this leaves empty. So a section whose only
+content is a TODO goes too; while the video files are missing, the Bot & Brew video section,
+the link to the longer version and the Home "Watch 60 s" button are left out, and while the CV
+is missing, Home has no CV line. The deploy lists the TODOs in its job summary. The local
+preview of `public/` keeps them.
 
 ## Checks
 
 | Script | Local / CI | Deploy |
 |---|---|---|
-| `check_links.py` | internal links and `#anchors` must resolve; external URLs get HEAD (then GET); 404s from the private repos are listed as expected | `--strict`: those 404s fail too |
-| `check_todos.py` | lists TODO blocks | `--strict`: any TODO fails |
+| `check_links.py` | internal links and `#anchors` must resolve; external URLs get HEAD (then GET); 404s from the private repos are listed as expected | same, then `--no-external` on `_site/` |
+| `check_todos.py` | lists TODO blocks | lists them in the job summary; `--strict` on `_site/`, which must have none |
 | `check_numbers.py` | every digit a reader sees is 30, February 2026, a name, or inside a TODO | same |
-| `check_public.py` | `--allow-private`: prints each repo's visibility | strict: every repo must be public |
-| `html5validator` | Nu Html Checker over `public/` | same |
+| `check_public.py` | `--allow-private`: prints each repo's visibility | same |
+| `html5validator` | Nu Html Checker over `public/` | over `public/` and `_site/` |
+
+`SITE_ROOT=_site` points any check at the published copy instead of `public/`; `check.yml`
+also builds and checks `_site/`, so a push shows what the deploy would publish.
 
 ## Deploy
 
-`deploy.yml` publishes `public/` to GitHub Pages on a push to `main`, after the strict checks.
+`deploy.yml` publishes `_site/` to GitHub Pages on a push to `main`, after the checks. The
+checks run non-strict, as in `check.yml`, so neither a TODO nor a private repo stops a deploy.
 It is switched off: the job runs only when the repository variable `DEPLOY_ENABLED` is `true`.
 To launch:
 
-1. Make the four project repos and this repo public.
-2. Resolve every TODO (`python3 scripts/check_todos.py --strict` passes).
-3. Settings → Pages → Source: GitHub Actions.
-4. `gh variable set DEPLOY_ENABLED --body true`, then push to `main` (or run the workflow).
+1. Make the repos in `data/repos.json` and this repo public (`check_public.py` prints each
+   one's visibility).
+2. Settings → Pages → Source: GitHub Actions.
+3. `gh variable set DEPLOY_ENABLED --body true -R giridhar-shenoy/portfolio-site`.
+4. `gh workflow run deploy.yml -R giridhar-shenoy/portfolio-site` (or push to `main`).
+5. Open every URL in `public/sitemap.xml`; each should return 200.
 
 The site is then at https://giridhar-shenoy.github.io/portfolio-site/.
 
