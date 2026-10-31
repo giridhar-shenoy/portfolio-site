@@ -197,7 +197,22 @@ completed	skipped	docs: explain preview, repos.json, the TODO convention and dep
 
 ### Lighthouse
 
-LIGHTHOUSE_PENDING
+Run 08:07–08:09, in the quiet window between the two R2 benchmark runs (Chrome is installed at
+/usr/bin/google-chrome; no browser was installed; Lighthouse 12.6.0 ran through `npx`, which
+downloads the npm package — the site spec asks for Lighthouse when Chrome is present, and there
+is no apt or pip Lighthouse). Reports and the score table: `docs/lighthouse/2026-10-31/`.
+
+| Page | Perf | A11y | BP | SEO |
+|---|---|---|---|---|
+| index | 100 | 100 | 100 | 100 |
+| repos | 100 | 100 | 100 | 100 |
+| work/orangewood-controls | 100 | 100 | 100 | 100 |
+| work/bot-and-brew | 100 | 100 | 100 | 100 |
+| 404 (local only) | 100 | 95 | 96 | 100 |
+
+404 misses A11y/BP only locally: its `/portfolio-site/` URLs do not resolve from `public/`.
+Headless-Chrome screenshots at 412 px and 1280 px then showed the repos table breaking repo names
+one letter per line; fixed in 287be21 (rows become labelled blocks on phones).
 
 ## TODOs on the site, by page
 
