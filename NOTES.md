@@ -692,3 +692,10 @@ $ ls -l public/assets/video public/assets/cv (published media)
 133 public/assets/video/bot-and-brew-60s.en.vtt
 7177426 public/assets/video/bot-and-brew-60s.mp4
 ```
+
+13. **CI fix after the content commit**: `check` and `deploy` failed on f564fd5 in "Generated
+    blocks are up to date" / "Build": `STALE: public/work/bot-and-brew.html`. The runner has no
+    `ffprobe`, so `build_media.py` wrote the player without `width="1280" height="720"`, while my
+    machine has it. `build_media.py` now reads the size from the MP4's track header (`tkhd`) in
+    plain Python, so both write the same block; checked against ffprobe on the clip (1280×720)
+    and the source (2560×1440).
