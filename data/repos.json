@@ -1,0 +1,69 @@
+{
+  "owner": "giridhar-shenoy",
+  "repos": [
+    {
+      "name": "ur5e-teaching-controllers",
+      "url": "https://github.com/giridhar-shenoy/ur5e-teaching-controllers",
+      "one_line": "ros2_control effort controllers for a simulated UR5e: joint-space tracking (PID, PID with RNEA feedforward, computed torque) on Pinocchio or KDL dynamics, gravity-compensated hand guiding with a runtime payload model, and damped-least-squares TCP jogging.",
+      "stack": "C++ for the control loop (controllers, dynamics backends); Python for orchestration and plots. ROS 2 Lyrical, ros2_control, Gazebo Jetty, Pinocchio, KDL.",
+      "hero": {
+        "local_clone": "~/work/r1",
+        "source_path": "docs/assets/hero.gif",
+        "source_commit": "28074acc45aff82b68c393409ace02b865d0d6f3",
+        "gif": "assets/img/ur5e-teaching-controllers.gif",
+        "still": "assets/img/ur5e-teaching-controllers.webp",
+        "still_width": 640,
+        "still_height": 480,
+        "alt": "Still from the hero GIF: a simulated UR5e in Gazebo switching between trajectory tracking and gravity-compensated hand guiding"
+      }
+    },
+    {
+      "name": "pointcloud-constrained-planning",
+      "url": "https://github.com/giridhar-shenoy/pointcloud-constrained-planning",
+      "one_line": "Keep-the-cup-upright constrained planning for a simulated UR5e through a shelf that MoveIt 2 only knows from an octomap built live from a simulated RGB-D camera, benchmarked against a pipeline written directly on OMPL, Pinocchio and coal.",
+      "stack": "C++ for the planning path (benchmark nodes, constraint builder, the direct pipeline); Python for launch, aggregation and plots. ROS 2 Lyrical, MoveIt 2 (MoveItCpp), OMPL, Pinocchio, coal, Gazebo Jetty.",
+      "hero": {
+        "local_clone": "~/work/r2",
+        "source_path": "docs/assets/constrained_vs_unconstrained.gif",
+        "source_commit": "e79d0666362a3e88bbd8b8709a14cb9814e50444",
+        "gif": "assets/img/pointcloud-constrained-planning.gif",
+        "still": "assets/img/pointcloud-constrained-planning.webp",
+        "still_width": 640,
+        "still_height": 240,
+        "alt": "Still from the hero GIF: the same shelf query planned without a constraint (left) and with the keep-upright constraint (right)"
+      }
+    },
+    {
+      "name": "humanoid-upper-body-retargeting",
+      "url": "https://github.com/giridhar-shenoy/humanoid-upper-body-retargeting",
+      "one_line": "Webcam to Unitree G1 upper-body retargeting in MuJoCo: MediaPipe Pose, a One-Euro filter and analytic plus damped-least-squares IK on both arms, recordable as LeRobot datasets. The animation and current results come from a synthetic fixture until the webcam recording replaces them.",
+      "stack": "Python for orchestration, recording and benchmarks; C++ for the per-frame filter and IK core through pybind11. MuJoCo, MediaPipe, LeRobot; CPU only.",
+      "hero": {
+        "local_clone": "~/work/r3",
+        "source_path": "docs/assets/retarget_synthetic.gif",
+        "source_commit": "c32d36ad11020ad8c78b810c642dacc5eaa5dc8a",
+        "gif": "assets/img/humanoid-upper-body-retargeting.gif",
+        "still": "assets/img/humanoid-upper-body-retargeting.webp",
+        "still_width": 640,
+        "still_height": 274,
+        "alt": "Still from the hero GIF, made from a synthetic fixture (a scripted motion, not a person): the estimator skeleton and the MuJoCo Unitree G1 following it"
+      }
+    },
+    {
+      "name": "sim-demo-to-policy",
+      "url": "https://github.com/giridhar-shenoy/sim-demo-to-policy",
+      "one_line": "A MuJoCo pick-and-place task on a Franka Panda: scripted demonstrations recorded as LeRobot datasets, ACT and a small from-scratch spatial-softmax BC policy trained on a laptop CPU, and an evaluation harness with held-out seeds, a failure taxonomy and confidence intervals.",
+      "stack": "Python only: the imitation-learning stack is Python. MuJoCo, LeRobot, PyTorch; CPU only.",
+      "hero": {
+        "local_clone": "~/work/r4",
+        "source_path": "docs/assets/rollouts.gif",
+        "source_commit": "275adf56767cafda3c2e556225a70c62d10d555e",
+        "gif": "assets/img/sim-demo-to-policy.gif",
+        "still": "assets/img/sim-demo-to-policy.webp",
+        "still_width": 640,
+        "still_height": 158,
+        "alt": "Still from the hero GIF: the scripted expert and the smallbc policy on a held-out seed, and smallbc on a shifted-box seed"
+      }
+    }
+  ]
+}
