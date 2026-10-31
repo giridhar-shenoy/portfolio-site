@@ -4,9 +4,8 @@ player or link, and the build passes either way.
   python3 scripts/build_media.py           # rewrite the slots from what is on disk
   python3 scripts/build_media.py --check   # exit 1 if a slot does not match the files (CI)
 
-Slots: the 60 s Bot & Brew video (mp4 + poster + WebVTT captions) and the CV (PDF). Two more
-follow the video: the Home "Watch 60 s" button (a TODO while the video is missing) and the
-clause on the Bot & Brew page that points at the player (left out while it is missing).
+Slots: the 60 s Bot & Brew video (mp4 + poster + WebVTT captions) and the CV (PDF). The Home
+"Watch 60 s" button follows the video (a TODO while the video is missing).
 """
 import argparse
 import json
@@ -61,7 +60,7 @@ Add them (raw footage can go in <code>public/assets/video/src/</code> for
 <track kind="captions" src="{up}{VIDEO['vtt']}" srclang="en" label="English" default>
 <a href="{up}{VIDEO['mp4']}">Download the video (MP4)</a>
 </video>
-<figcaption>The autonomous latte cycle, start to finish, with no human intervention.</figcaption>
+<figcaption>One autonomous cycle, filmed from several angles in January 2026 in our workshop in Fort Kochi; nobody touched the cell during the run. Shown at 2× speed. The full-length version is linked below.</figcaption>
 </figure>
 """
 
@@ -73,10 +72,6 @@ def watch_slot(up):
             '(<code>scripts/build_media.py</code>).</p>\n')
 
 
-def video_ref_slot(up):
-    return "; the video above is that cycle" if video_present() else ""
-
-
 def cv_slot(up):
     if (PUBLIC / CV).is_file():
         return f'<a href="{up}{CV}">CV (PDF)</a>'
@@ -84,7 +79,6 @@ def cv_slot(up):
 
 
 SLOTS = (("work/bot-and-brew.html", "bot-and-brew-60s", video_slot, "../"),
-         ("work/bot-and-brew.html", "video-ref", video_ref_slot, "../"),
          ("index.html", "watch", watch_slot, ""),
          ("index.html", "cv", cv_slot, ""))
 

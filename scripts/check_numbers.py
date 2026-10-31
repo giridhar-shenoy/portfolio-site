@@ -5,12 +5,18 @@
 The rule: the only numbers on the site are 30 (the production arms, on the Home page and the
 Orangewood page) and February 2026, unless they sit inside a visible TODO block. Digits that
 are part of a name (ROS 2, MoveIt 2, UR5e, Unitree G1, ros2_control, pybind11,
-ur5e-teaching-controllers), the "6-axis" in the Orangewood
+ur5e-teaching-controllers, MP4), the "6-axis" in the Orangewood
 paragraph, the copyright year in the footer and the "60 s" label of the video are listed
 separately so they can be reviewed, and are not counted as numbers.
 
 Scanned: visible text, <title>, alt / title / aria-label attributes, and the description and
 Open Graph text fields. Not scanned: URLs, file names, image dimensions.
+
+The Bot & Brew page also carries the numbers its author states in content/bot-and-brew.md;
+they are allowed there only, as the group "facts stated by the author", and so is the "2 min"
+in the label of the full-length video link. A number is anything with a digit in it, so only
+the digit-bearing entries can fail; the spelled-out ones (nine bar, two months, ...) are matched
+so that they appear in the inventory for review.
 """
 import re
 import sys
@@ -19,9 +25,25 @@ from html.parser import HTMLParser
 
 from sitelib import PUBLIC, pages
 
-HOME, ORANGEWOOD = "index.html", "work/orangewood-controls.html"
+HOME, ORANGEWOOD, BOT_AND_BREW = "index.html", "work/orangewood-controls.html", "work/bot-and-brew.html"
+AUTHOR = "facts stated by the author (content/bot-and-brew.md)"
 # (regex, why it is allowed, pages it is allowed on or None for every page)
 ALLOWED = [
+    (r"\bnine bar\b", AUTHOR, {BOT_AND_BREW}),
+    (r"\btwo months\b", AUTHOR, {BOT_AND_BREW}),
+    (r"\bthirty and fifty\b", AUTHOR, {BOT_AND_BREW}),
+    (r"\bfive feet by five\b", AUTHOR, {BOT_AND_BREW}),
+    (r"\beight minutes\b", AUTHOR, {BOT_AND_BREW}),
+    (r"\bJanuary 2026\b", AUTHOR, {BOT_AND_BREW}),
+    (r"\bAugust 2025\b", AUTHOR, {BOT_AND_BREW}),
+    (r"\bFebruary 2026\b", AUTHOR, {BOT_AND_BREW}),
+    (r"\bSeptember 2026\b", AUTHOR, {BOT_AND_BREW}),
+    (r"\b1 November 2026\b", AUTHOR, {BOT_AND_BREW}),
+    (r"\bsix-axis\b", AUTHOR, {BOT_AND_BREW}),
+    (r"\b2×", AUTHOR, {BOT_AND_BREW}),
+    (r"\bLubanCat 5\b", AUTHOR, {BOT_AND_BREW}),
+    (r"\bFR5\b", AUTHOR, {BOT_AND_BREW}),
+    (r"\b2 min\b", "label of the full-length video link", {BOT_AND_BREW}),
     (r"\b30\b", "number: the production arms", {HOME, ORANGEWOOD}),
     (r"\bFebruary 2026\b", "number: Bot & Brew wound down", None),
     (r"\bROS 2\b", "name", None),
@@ -30,6 +52,7 @@ ALLOWED = [
     (r"\bUnitree G1\b", "name", None),
     (r"\bros2_control\b", "name", None),
     (r"\bpybind11\b", "name", None),
+    (r"\bMP4\b", "name: the video file format", None),
     (r"\bur5e-teaching-controllers\b", "repo name", None),
     (r"\b6-axis\b", "verbatim Orangewood paragraph", {ORANGEWOOD}),
     (r"© 2026", "footer copyright line", None),

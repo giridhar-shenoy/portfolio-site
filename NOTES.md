@@ -496,3 +496,199 @@ up to date: public/repos.html
 up to date: public/work/bot-and-brew.html
 exit 0
 ```
+
+## Media and Bot & Brew content (1 Nov 2026)
+
+Task: the 60 s video, poster and captions from the full-length video; the Bot & Brew page from
+`content/bot-and-brew.md`; the CV; the numbers check; deploy if enabled. Decisions taken
+without waiting, as the task asked.
+
+### Decisions taken (1 Nov, media and content)
+
+1. **Source file name**: the full-length video is `public/assets/video/src/Demo_video.mp4`
+   (not `bot-and-brew-full.mp4` as the task says): 2560×1440 H.264, about 30 fps, 123.9 s,
+   with audio, 376,623,263 B. Used as is, not renamed; `src/` is git-ignored, so it stays local.
+2. **The 60 s clip** comes from the task's command, now built into
+   `scripts/optimize_media.sh --video SRC` so it can be regenerated. Run under
+   `~/work/.locks/heavy.lock` (2 min 21 s wall). CRF 24 → 10,077,822 B, 25 → 8,464,928 B,
+   26 → **7,177,426 B** (kept; the 8 MB limit taken as 8,000,000 B). Result: 1280×720 H.264
+   yuv420p, 30 fps, 1860 frames (every second frame of the source's 3718: the whole cycle at
+   2×, nothing cut), 62.0 s, no audio, faststart. Poster: the frame at 5 s, `-q:v 2`, 86,576 B
+   (limit 150,000 B), showing the arm with the portafilter at the grinder. Captions: one cue,
+   `00:00:00.000 --> 00:01:01.999`, with the task's text. The script's old generic loop
+   (every file in `src/` → same-name MP4 at 1× with audio, plus a poster at 1 s) was replaced,
+   because it would have written `Demo_video.mp4`, not the slot's files.
+3. **Page text, word for word**: the intro, the video caption (the `<figcaption>` that
+   `build_media.py` writes), the four "What the kiosk did" paragraphs and the Entrepreneur
+   First paragraph are the file's text, HTML-escaped (`&` → `&amp;`) and nothing else; a
+   script compared every paragraph of the file with the page's text: all seven present
+   verbatim. The only other text in that part of the page is the task's link label
+   "Full-length version (2 min, Google Drive)".
+4. **Headings**: the file's headings name the parts they replace. "Intro", "Video caption" and
+   "Entrepreneur First" are labels, so they are not shown; "What the kiosk did" is also the
+   page's section heading and stays. The file has **no "What was hard, technically" section**
+   (the task names one), so the page has no such heading. The page's other sections ("What
+   failed, technical", "What failed, commercial" with its one sentence, "What I would do
+   differently", "What transferred to my engineering") are not in the file and were removed
+   with every TODO block. The video section's heading "The latte cycle on video" is not one of
+   the file's headings and stays.
+5. **Entrepreneur First paragraph** replaces the one-line aside in the same place and keeps
+   its `aside` class (muted text), as the task replaces "the Entrepreneur First line".
+6. **Removed with the old text**: the `video-ref` slot in `build_media.py` (the clause "; the
+   video above is that cycle" belonged to the replaced sentence).
+7. **Descriptions trimmed, deletion only**: the Bot & Brew description and Open Graph
+   description no longer promise "what failed" and "what transferred", which the page no
+   longer has (decision 8 of the follow-up above). No new words.
+8. **check_numbers.py**: a group "facts stated by the author (content/bot-and-brew.md)",
+   allowed on the Bot & Brew page only, with the task's fourteen items ("thirty to fifty"
+   appears in the file as "thirty and fifty" and is matched that way). The check fails only on
+   digits, so the spelled-out entries just put those numbers in the inventory. Two more
+   allowances: "2 min" (the task's link label) and "MP4" as a name (the player's generated
+   fallback link "Download the video (MP4)"). A negative test on a scratch copy
+   (`SITE_ROOT`) with "9 bar", "8 minutes" and "31 production arms" failed with exactly those.
+9. **The CV** is committed and linked from Home by `build_media.py`. I checked only that it is
+   a 2-page PDF with no "TODO"/"TBD"/"lorem"/"xxx" in its text; I did not read it otherwise.
+10. **`content/bot-and-brew.md` is committed** as the source of the page text (outside
+    `public/`, so not published).
+11. **sitemap.xml**: `lastmod` 2026-11-01 for Home, repos and Bot & Brew, which changed today.
+12. **Deploy**: `DEPLOY_ENABLED` is `true`, but Pages is still not enabled (Pages API 404 at
+    01:40), so the push runs the deploy job and it stops at `configure-pages`; nothing goes
+    live, and the live URLs cannot be fetched yet.
+
+### For the author: where the file disagrees with something else on the site
+
+- **Cycle time vs the video.** The file says "One cycle took roughly eight minutes", but the
+  full-length video of "one autonomous cycle" is 2 min 4 s, and the caption, the captions file
+  and the Home "Watch 60 s" button present the 60 s clip as that cycle "at 2× speed". If a cycle
+  took about eight minutes, the full-length video is already condensed (several angles; the
+  footage carries a "Bot and Brew" title), so "2× speed" understates the compression and
+  "Full-length version" reads as real time.
+- **"An engineering post-mortem"** (the page title, and Home's "Case study: Bot & Brew, an
+  engineering post-mortem"): the page no longer has a section on what failed or what
+  transferred; the only verdict is the Entrepreneur First paragraph's "not a venture-scale
+  business".
+- Not from the file: Home's tagline says "Controllers running on 30 production arms" (present
+  tense), while the Orangewood page says both controllers "stayed in service until the next
+  hardware generation".
+
+### Checks (run 1 Nov before the content commit, output pasted as produced)
+
+```text
+$ .venv/bin/html5validator --root public --log INFO
+INFO:html5validator.cli:Number of files: 5
+INFO:html5validator.validator:All good.
+exit 0
+
+$ python3 scripts/check_links.py
+internal: 76 links and anchors checked, 0 broken
+not checked: mailto:giridharjshenoy@gmail.com
+external: 13 URLs: 12 ok, 0 expected 404 until Sunday (private repos), 1 warnings, 0 failed
+  ok: 200  https://drive.google.com/file/d/1dx2QZJ8dTxYjlFIyCTR4aFR4TP-qykYk/view  (work/bot-and-brew.html:57)
+  ok: 200  https://github.com/giridhar-shenoy  (404.html:38, index.html:96, repos.html:79, work/bot-and-brew.html:75, work/orangewood-controls.html:54)
+  ok: 200  https://github.com/giridhar-shenoy/pointcloud-constrained-planning  (index.html:63, repos.html:58)
+  ok: 200  https://github.com/giridhar-shenoy/pointcloud-constrained-planning/actions/workflows/ci.yml  (repos.html:61)
+  ok: 200  https://github.com/giridhar-shenoy/pointcloud-constrained-planning/actions/workflows/ci.yml/badge.svg?branch=main  (repos.html:61)
+  ok: 200  https://github.com/giridhar-shenoy/sim-demo-to-policy  (index.html:71, repos.html:64)
+  ok: 200  https://github.com/giridhar-shenoy/sim-demo-to-policy/actions/workflows/ci.yml  (repos.html:67)
+  ok: 200  https://github.com/giridhar-shenoy/sim-demo-to-policy/actions/workflows/ci.yml/badge.svg?branch=main  (repos.html:67)
+  ok: 200  https://github.com/giridhar-shenoy/ur5e-teaching-controllers  (index.html:55, repos.html:52, work/orangewood-controls.html:47)
+  ok: 200  https://github.com/giridhar-shenoy/ur5e-teaching-controllers/actions/workflows/ci.yml  (repos.html:55)
+  ok: 200  https://github.com/giridhar-shenoy/ur5e-teaching-controllers/actions/workflows/ci.yml/badge.svg?branch=main  (repos.html:55)
+  ok: 200  https://www.ycombinator.com/companies/orangewood-labs  (work/orangewood-controls.html:44)
+  warning (host blocks automated requests): 999  https://www.linkedin.com/in/giridhar-j-shenoy/  (404.html:39, index.html:97, repos.html:80, work/bot-and-brew.html:76, work/orangewood-controls.html:55)
+exit 0
+
+$ python3 scripts/check_numbers.py
+Allowed digits outside TODO blocks (page · text · why · count):
+  404.html · © 2026 · footer copyright line · 1
+  index.html · 30 · number: the production arms · 1
+  index.html · 60 s · label of the 60-second video · 1
+  index.html · MoveIt 2 · name · 1
+  index.html · ROS 2 · name · 5
+  index.html · UR5e · name · 3
+  index.html · ros2_control · name · 1
+  index.html · ur5e-teaching-controllers · repo name · 1
+  index.html · © 2026 · footer copyright line · 1
+  repos.html · MoveIt 2 · name · 2
+  repos.html · ROS 2 · name · 3
+  repos.html · UR5e · name · 2
+  repos.html · ros2_control · name · 2
+  repos.html · ur5e-teaching-controllers · repo name · 1
+  repos.html · © 2026 · footer copyright line · 1
+  work/bot-and-brew.html · 1 November 2026 · facts stated by the author (content/bot-and-brew.md) · 1
+  work/bot-and-brew.html · 2 min · label of the full-length video link · 1
+  work/bot-and-brew.html · 2× · facts stated by the author (content/bot-and-brew.md) · 1
+  work/bot-and-brew.html · August 2025 · facts stated by the author (content/bot-and-brew.md) · 1
+  work/bot-and-brew.html · FR5 · facts stated by the author (content/bot-and-brew.md) · 1
+  work/bot-and-brew.html · February 2026 · facts stated by the author (content/bot-and-brew.md) · 1
+  work/bot-and-brew.html · January 2026 · facts stated by the author (content/bot-and-brew.md) · 1
+  work/bot-and-brew.html · LubanCat 5 · facts stated by the author (content/bot-and-brew.md) · 1
+  work/bot-and-brew.html · MP4 · name: the video file format · 1
+  work/bot-and-brew.html · MoveIt 2 · name · 1
+  work/bot-and-brew.html · ROS 2 · name · 2
+  work/bot-and-brew.html · September 2026 · facts stated by the author (content/bot-and-brew.md) · 1
+  work/bot-and-brew.html · eight minutes · facts stated by the author (content/bot-and-brew.md) · 1
+  work/bot-and-brew.html · five feet by five · facts stated by the author (content/bot-and-brew.md) · 1
+  work/bot-and-brew.html · nine bar · facts stated by the author (content/bot-and-brew.md) · 1
+  work/bot-and-brew.html · six-axis · facts stated by the author (content/bot-and-brew.md) · 2
+  work/bot-and-brew.html · thirty and fifty · facts stated by the author (content/bot-and-brew.md) · 1
+  work/bot-and-brew.html · two months · facts stated by the author (content/bot-and-brew.md) · 1
+  work/bot-and-brew.html · © 2026 · footer copyright line · 1
+  work/orangewood-controls.html · 30 · number: the production arms · 1
+  work/orangewood-controls.html · 6-axis · verbatim Orangewood paragraph · 3
+  work/orangewood-controls.html · ROS 2 · name · 1
+  work/orangewood-controls.html · UR5e · name · 3
+  work/orangewood-controls.html · ur5e-teaching-controllers · repo name · 1
+  work/orangewood-controls.html · © 2026 · footer copyright line · 1
+Digits inside TODO blocks (page · token · count):
+Disallowed numbers: 0
+exit 0
+
+$ python3 scripts/check_todos.py
+0 TODO block(s)
+exit 0
+
+$ python3 scripts/check_weight.py
+404.html: 8.4 KB (ok) = html 1 KB + favicon.png 0 KB, site.css 6 KB
+index.html: 37.2 KB (ok) = html 6 KB + favicon.png 0 KB, site.webmanifest 0 KB, site.css 6 KB, ur5e-teaching-controllers.webp 7 KB, pointcloud-constrained-planning.webp 10 KB, sim-demo-to-policy.webp 5 KB
+repos.html: 12.5 KB (ok) = html 5 KB + favicon.png 0 KB, site.webmanifest 0 KB, site.css 6 KB
+work/bot-and-brew.html: 12.7 KB (ok) = html 5 KB + favicon.png 0 KB, site.webmanifest 0 KB, site.css 6 KB
+work/orangewood-controls.html: 10.4 KB (ok) = html 3 KB + favicon.png 0 KB, site.webmanifest 0 KB, site.css 6 KB
+exit 0
+
+$ python3 scripts/build_repos.py --check && python3 scripts/build_media.py --check
+up to date: public/index.html
+up to date: public/repos.html
+up to date: public/work/bot-and-brew.html
+exit 0
+
+$ python3 scripts/build_site.py
+404.html: no TODO, copied unchanged
+index.html: no TODO, copied unchanged
+repos.html: no TODO, copied unchanged
+work/bot-and-brew.html: no TODO, copied unchanged
+work/orangewood-controls.html: no TODO, copied unchanged
+wrote _site
+exit 0
+
+$ SITE_ROOT=_site python3 scripts/check_todos.py --strict
+0 TODO block(s)
+exit 0
+
+$ SITE_ROOT=_site python3 scripts/check_links.py --no-external
+internal: 76 links and anchors checked, 0 broken
+not checked: mailto:giridharjshenoy@gmail.com
+external: 13 URLs not checked (--no-external)
+exit 0
+
+$ .venv/bin/html5validator --root _site --log INFO
+INFO:html5validator.cli:Number of files: 5
+INFO:html5validator.validator:All good.
+exit 0
+
+$ ls -l public/assets/video public/assets/cv (published media)
+76492 public/assets/cv/giridhar-shenoy-cv.pdf
+86576 public/assets/video/bot-and-brew-60s-poster.jpg
+133 public/assets/video/bot-and-brew-60s.en.vtt
+7177426 public/assets/video/bot-and-brew-60s.mp4
+```

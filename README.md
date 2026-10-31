@@ -26,9 +26,10 @@ depth), so its stylesheet and links only resolve on the deployed site.
 | `public/` | The site exactly as published: five pages, `robots.txt`, `sitemap.xml`, `site.webmanifest`, `assets/` |
 | `data/repos.json` | The repos on the site: one line, stack, hero GIF source and commit (schema below) |
 | `scripts/build_repos.py` | Writes the Home cards and the `repos.html` table from `data/repos.json`; `--refresh-heroes` copies the GIFs from the local clones |
-| `scripts/build_media.py` | Fills the video and CV slots: a TODO block while a file is missing, the player or link once it exists; the Home "Watch 60 s" button and the Bot & Brew clause that points at the player follow the video |
+| `content/bot-and-brew.md` | The author's text of the Bot & Brew page (intro, video caption, sections, Entrepreneur First paragraph); the page is that text converted to HTML by hand, word for word |
+| `scripts/build_media.py` | Fills the video and CV slots: a TODO block while a file is missing, the player or link once it exists; the Home "Watch 60 s" button follows the video |
 | `scripts/build_site.py` | Writes `_site/`, the published copy: `public/` without the TODO blocks (see below) |
-| `scripts/optimize_media.sh` | GIF → still (WebP) for the cards; raw video → H.264 MP4 and poster |
+| `scripts/optimize_media.sh` | GIF → still (WebP) for the cards; `--video SRC`: the full-length video → the 60 s clip at 2× speed (≤ 8 MB), its poster (≤ 150 KB) and captions |
 | `scripts/make_images.py` | Open Graph image and icons (Pillow, local only) |
 | `scripts/check_*.py` | `check_links`, `check_todos`, `check_numbers`, `check_public` (see below) |
 | `.github/workflows/` | `check.yml` on every push and PR; `deploy.yml` to Pages, switched off until launch |
@@ -70,9 +71,8 @@ border and the word TODO), never prose that looks like a fact. `scripts/check_to
 every one. TODOs never reach the published site and never block a deploy: the deploy publishes
 `_site/`, which `scripts/build_site.py` writes from `public/` without any element with class
 `todo`, and without a heading or element that this leaves empty. So a section whose only
-content is a TODO goes too; while the video files are missing, the Bot & Brew video section,
-the link to the longer version and the Home "Watch 60 s" button are left out, and while the CV
-is missing, Home has no CV line. The deploy lists the TODOs in its job summary. The local
+content is a TODO goes too, and while the video or the CV file is missing, the Home "Watch 60 s"
+button or the CV line is left out. The deploy lists the TODOs in its job summary. The local
 preview of `public/` keeps them.
 
 ## Checks
