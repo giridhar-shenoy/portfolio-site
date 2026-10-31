@@ -76,3 +76,153 @@ Environment: Ubuntu 26.04, system `python3 --version` → Python 3.14.4. html5va
   refused with "The job was not started because recent account payments have failed or your
   spending limit needs to be increased" (run 41156445456). Every check was run locally instead
   (output below). deploy.yml showed as skipped, as designed.
+
+## Acceptance checks (run 31 Oct, output pasted as produced)
+
+| Item | Result |
+|---|---|
+| Every page validates as HTML5 | yes: Nu checker "All good", 5 files |
+| check_links.py passes | yes: 73 internal links/anchors, 0 broken; 12 private-repo URLs 404 as expected; LinkedIn 999 (warning) |
+| Every number is 30, February 2026, or inside a TODO | yes: 0 disallowed; names with digits listed for review |
+| repos.html lists exactly the four repos; repos.json has a commit per repo | yes |
+| Bot & Brew page renders with the video absent and shows the TODO | yes (TODO block in place of the player; screenshot under Lighthouse below) |
+| robots.txt allows crawling; no noindex; sitemap lists every page | yes, except 404.html is left out of the sitemap on purpose (see decisions) |
+| Page weight without video < 500 KB | yes: largest is index.html at 46.1 KB |
+| Conventional commits, none backdated; repo private; nothing deployed | yes: author date = commit date on every commit; PRIVATE; Pages API 404 (not enabled); deploy runs "skipped" |
+| CI on GitHub | not run: Actions refused to start the job on this private repo (billing/spending-limit message); all checks run locally |
+
+```text
+$ .venv/bin/html5validator --root public --log INFO
+INFO:html5validator.cli:Number of files: 5
+INFO:html5validator.validator:All good.
+exit 0
+
+$ python3 scripts/check_links.py   (summary lines)
+internal: 73 links and anchors checked, 0 broken
+not checked: mailto:giridharjshenoy@gmail.com
+external: 15 URLs: 2 ok, 12 expected 404 until Sunday (private repos), 1 warnings, 0 failed
+  warning (host blocks automated requests): 999  https://www.linkedin.com/in/giridhar-j-shenoy/  (404.html:39, index.html:103, repos.html:86, work/bot-and-brew.html:85, work/orangewood-controls.html:55)
+
+$ python3 scripts/check_numbers.py
+Allowed digits outside TODO blocks (page · text · why · count):
+  404.html · © 2026 · footer copyright line · 1
+  index.html · 30 · number: the production arms · 1
+  index.html · 60 s · label of the 60-second video · 1
+  index.html · MoveIt 2 · name · 1
+  index.html · ROS 2 · name · 5
+  index.html · UR5e · name · 3
+  index.html · Unitree G1 · name · 2
+  index.html · ros2_control · name · 1
+  index.html · ur5e-teaching-controllers · repo name · 1
+  index.html · © 2026 · footer copyright line · 1
+  repos.html · MoveIt 2 · name · 2
+  repos.html · ROS 2 · name · 3
+  repos.html · UR5e · name · 2
+  repos.html · Unitree G1 · name · 1
+  repos.html · pybind11 · name · 1
+  repos.html · ros2_control · name · 2
+  repos.html · ur5e-teaching-controllers · repo name · 2
+  repos.html · © 2026 · footer copyright line · 1
+  work/bot-and-brew.html · February 2026 · number: Bot & Brew wound down · 1
+  work/bot-and-brew.html · ROS 2 · name · 1
+  work/bot-and-brew.html · © 2026 · footer copyright line · 1
+  work/orangewood-controls.html · 30 · number: the production arms · 1
+  work/orangewood-controls.html · 6-axis · verbatim Orangewood paragraph · 3
+  work/orangewood-controls.html · ROS 2 · name · 1
+  work/orangewood-controls.html · UR5e · name · 3
+  work/orangewood-controls.html · ur5e-teaching-controllers · repo name · 1
+  work/orangewood-controls.html · © 2026 · footer copyright line · 1
+Digits inside TODO blocks (page · token · count):
+  work/bot-and-brew.html · 60-second · 1
+  work/bot-and-brew.html · public/assets/video/bot-and-brew-60s-poster.jpg · 1
+  work/bot-and-brew.html · public/assets/video/bot-and-brew-60s.en.vtt · 1
+  work/bot-and-brew.html · public/assets/video/bot-and-brew-60s.mp4 · 1
+Disallowed numbers: 0
+
+$ python3 -c "...count rows in repos.html and commits in data/repos.json"
+repos.html rows: ['ur5e-teaching-controllers', 'pointcloud-constrained-planning', 'humanoid-upper-body-retargeting', 'sim-demo-to-policy']
+  ur5e-teaching-controllers: docs/assets/hero.gif @ 28074acc45aff82b68c393409ace02b865d0d6f3
+  pointcloud-constrained-planning: docs/assets/constrained_vs_unconstrained.gif @ e79d0666362a3e88bbd8b8709a14cb9814e50444
+  humanoid-upper-body-retargeting: docs/assets/retarget_synthetic.gif @ c32d36ad11020ad8c78b810c642dacc5eaa5dc8a
+  sim-demo-to-policy: docs/assets/rollouts.gif @ 275adf56767cafda3c2e556225a70c62d10d555e
+
+$ python3 scripts/check_todos.py | grep bot-and-brew | head -2
+work/bot-and-brew.html:48: TODO The 60-second video goes here. Missing files: public/assets/video/bot-and-brew-60s.mp4 public/assets/video/bot-and-brew-60s-poster.jpg public/assets/video/bot-and-brew-60s.en.vtt Add them (raw footage can go in public/assets/video/src/ for scripts/optimize_media.sh), then run scripts/build_media.py.
+
+$ cat public/robots.txt; grep -ril noindex public || echo "no noindex"
+User-agent: *
+Allow: /
+
+Sitemap: https://giridhar-shenoy.github.io/portfolio-site/sitemap.xml
+no noindex anywhere under public/
+
+$ sitemap <loc> vs pages
+https://giridhar-shenoy.github.io/portfolio-site/
+https://giridhar-shenoy.github.io/portfolio-site/repos.html
+https://giridhar-shenoy.github.io/portfolio-site/work/orangewood-controls.html
+https://giridhar-shenoy.github.io/portfolio-site/work/bot-and-brew.html
+./404.html
+./index.html
+./repos.html
+./work/bot-and-brew.html
+./work/orangewood-controls.html
+
+$ python3 scripts/check_weight.py
+404.html: 7.6 KB (ok) = html 1 KB + favicon.png 0 KB, site.css 5 KB
+index.html: 46.1 KB (ok) = html 6 KB + favicon.png 0 KB, site.webmanifest 0 KB, site.css 5 KB, ur5e-teaching-controllers.webp 7 KB, pointcloud-constrained-planning.webp 10 KB, humanoid-upper-body-retargeting.webp 8 KB, sim-demo-to-policy.webp 5 KB
+repos.html: 12.5 KB (ok) = html 6 KB + favicon.png 0 KB, site.webmanifest 0 KB, site.css 5 KB
+work/bot-and-brew.html: 10.6 KB (ok) = html 4 KB + favicon.png 0 KB, site.webmanifest 0 KB, site.css 5 KB
+work/orangewood-controls.html: 9.7 KB (ok) = html 3 KB + favicon.png 0 KB, site.webmanifest 0 KB, site.css 5 KB
+
+$ git log --format="%h  author %ad  commit %cd  %s" --date=format:"%F %T %z"
+bb9a987  author 2026-10-31 07:14:15 +0530  commit 2026-10-31 07:14:15 +0530  docs: record unattended decisions and the changelog entry
+57cc255  author 2026-10-31 07:14:15 +0530  commit 2026-10-31 07:14:15 +0530  test: check page weight against the 500 KB budget
+e865c64  author 2026-10-31 07:09:57 +0530  commit 2026-10-31 07:09:57 +0530  docs: explain preview, repos.json, the TODO convention and deploy
+ee3723b  author 2026-10-31 07:09:57 +0530  commit 2026-10-31 07:09:57 +0530  ci: run the checks on push; add a Pages deploy that is switched off
+96a6a9f  author 2026-10-31 07:09:57 +0530  commit 2026-10-31 07:09:57 +0530  test: add link, TODO, number and visibility checks
+674fb25  author 2026-10-31 07:09:57 +0530  commit 2026-10-31 07:09:57 +0530  feat: generate the Open Graph image and icons
+d861462  author 2026-10-31 07:09:57 +0530  commit 2026-10-31 07:09:57 +0530  feat: render a TODO where the video or CV file is missing
+09a5ef6  author 2026-10-31 07:09:57 +0530  commit 2026-10-31 07:09:57 +0530  feat: build the repo cards and table from data/repos.json
+8c480f9  author 2026-10-31 07:09:57 +0530  commit 2026-10-31 07:09:57 +0530  feat: add the five pages and the stylesheet
+d6ace16  author 2026-10-31 07:01:57 +0530  commit 2026-10-31 07:01:57 +0530  chore: start the portfolio site repository
+
+$ gh repo view --json visibility -q .visibility; gh api repos/giridhar-shenoy/portfolio-site/pages
+PRIVATE
+{"message":"Not Found","documentation_url":"https://docs.github.com/rest/pages/pages#get-a-apiname-pages-site","status":"404"}gh: Not Found (HTTP 404)
+
+$ gh run list --workflow deploy.yml
+completed	skipped	docs: record unattended decisions and the changelog entry	deploy	main	push	41156774243	7s	2026-10-31T01:44:18Z
+completed	skipped	docs: explain preview, repos.json, the TODO convention and deploy	deploy	main	push	41156445444	1s	2026-10-31T01:40:06Z
+```
+
+### Lighthouse
+
+LIGHTHOUSE_PENDING
+
+## TODOs on the site, by page
+
+- **index.html**: CV (PDF) — add `public/assets/cv/giridhar-shenoy-cv.pdf`, run `scripts/build_media.py`.
+- **work/bot-and-brew.html**:
+  - the 60 s video: `public/assets/video/bot-and-brew-60s.mp4`, `bot-and-brew-60s-poster.jpg`
+    (or let `scripts/optimize_media.sh` make it), `bot-and-brew-60s.en.vtt` captions; then
+    `scripts/build_media.py`;
+  - the link to the 2-minute YouTube (unlisted) version;
+  - "What the kiosk did": step by step, the hardware, the control and sensing stack;
+  - "What failed, technical";
+  - "What failed, commercial": why it was not deployed and why it wound down;
+  - "What I would do differently";
+  - "What transferred to my engineering".
+- **Not a page TODO, but before launch**: the four repos and this repo must be public, Pages
+  source set to GitHub Actions, and `DEPLOY_ENABLED=true` (README "Deploy").
+
+## CHANGELOG entry for this session
+
+See `CHANGELOG.md` → `[Unreleased]` → Added (skeleton, five pages, stylesheet, repos.json and
+build_repos.py, build_media.py, make_images.py, the five checks, check.yml and the gated
+deploy.yml).
+
+## Preview
+
+```bash
+cd ~/work/site && python3 -m http.server -d public 8000   # open http://localhost:8000/
+```
