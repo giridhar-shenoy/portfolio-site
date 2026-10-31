@@ -1,0 +1,55 @@
+# Publish public/ to GitHub Pages on every push to main, after the strict checks.
+#
+# Switched off until launch: the job runs only when the repository variable DEPLOY_ENABLED is
+# "true". Until then a push shows this workflow as skipped and nothing is built or published.
+# To launch: make this repo and the four project repos public, set Settings → Pages → Source to
+# "GitHub Actions", set the variable (gh variable set DEPLOY_ENABLED --body true), then push to
+# main or run this workflow from the Actions tab.
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: vars.DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install the HTML validator
+        run: pip install html5validator==0.4.2
+      - name: Build (regenerate the generated blocks; fail if the commit was stale)
+        run: |
+          python3 scripts/build_repos.py --check
+          python3 scripts/build_media.py --check
+      - name: Strict checks
+        run: |
+          python3 scripts/check_public.py
+          python3 scripts/check_todos.py --strict
+          python3 scripts/check_numbers.py
+          python3 scripts/check_links.py --strict
+          html5validator --root public --log INFO
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+      - id: deployment
+        uses: actions/deploy-pages@v4
