@@ -212,7 +212,8 @@ is no apt or pip Lighthouse). Reports and the score table: `docs/lighthouse/2026
 
 404 misses A11y/BP only locally: its `/portfolio-site/` URLs do not resolve from `public/`.
 Headless-Chrome screenshots at 412 px and 1280 px then showed the repos table breaking repo names
-one letter per line; fixed in 287be21 (rows become labelled blocks on phones).
+one letter per line; fixed in 287be21 (rows become labelled blocks on phones). Re-run of repos.html after the fix (09:01): 100 / 100 / 100 / 100; a 412 px screenshot shows
+labelled blocks with whole repo names.
 
 ## TODOs on the site, by page
 
