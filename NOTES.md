@@ -69,6 +69,10 @@ Environment: Ubuntu 26.04, system `python3 --version` → Python 3.14.4. html5va
   /launches/orangewood-labs returned 404 and was not used.
 - **The CV slot stays a TODO**: ~/work/resume/Giridhar_J_Shenoy_CV.pdf exists but still has
   TODOs in it, and the spec says the CV does not exist yet; it was not copied.
-(removed)
-  Orangewood and "30 production 6-axis arms" because the site spec says so; the repos' own NDA
-  rule (no employer name or unit count) is not applied to the site.
+- **Employer name and unit count**: the site names Orangewood and "30 production 6-axis arms"
+  because the site spec says so; the repos' own rule (no employer name or unit count) is not
+  applied to the site.
+- **GitHub Actions do not start on private repos on this account**: the first check.yml run was
+  refused with "The job was not started because recent account payments have failed or your
+  spending limit needs to be increased" (run 41156445456). Every check was run locally instead
+  (output below). deploy.yml showed as skipped, as designed.
