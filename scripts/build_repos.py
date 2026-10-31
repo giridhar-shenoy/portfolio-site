@@ -57,10 +57,10 @@ def table(data):
     for r in data["repos"]:
         ci = f"{r['url']}/actions/workflows/ci.yml"
         rows.append(f"""<tr>
-<td><a href="{r['url']}">{escape(r['name'])}</a></td>
-<td>{escape(r['one_line'])}</td>
-<td>{escape(r['stack'])}</td>
-<td><a href="{ci}"><img src="{ci}/badge.svg?branch=main" alt="CI status of {escape(r['name'])}" height="20" class="badge"></a></td>
+<td class="repo" data-label="Repo"><a href="{r['url']}">{escape(r['name']).replace("-", "-<wbr>")}</a></td>
+<td data-label="What it is">{escape(r['one_line'])}</td>
+<td data-label="Stack">{escape(r['stack'])}</td>
+<td class="ci" data-label="CI"><a href="{ci}"><img src="{ci}/badge.svg?branch=main" alt="CI status" height="20" class="badge"></a></td>
 </tr>""")
     return f"""
 <div class="table-scroll">

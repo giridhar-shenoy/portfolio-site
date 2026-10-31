@@ -284,8 +284,63 @@ th {
   border-bottom-width: 2px;
 }
 
-td a {
-  overflow-wrap: anywhere;
+td.repo {
+  min-width: 9rem;
+}
+
+td.ci {
+  white-space: nowrap;
+}
+
+.badge {
+  height: 20px;
+  width: auto;
+}
+
+/* On a phone the table becomes one block per repo, each cell labelled from data-label */
+
+@media (max-width: 40rem) {
+  thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  table,
+  tbody,
+  tr,
+  td {
+    display: block;
+  }
+
+  tr {
+    padding: 0.5rem 0;
+    border-bottom: 2px solid var(--rule);
+  }
+
+  td {
+    border-bottom: 0;
+    padding: 0.25rem 0;
+  }
+
+  td::before {
+    content: attr(data-label);
+    display: block;
+    font-weight: 700;
+    color: var(--muted);
+    font-size: 0.875rem;
+  }
+
+  td.repo::before {
+    display: none;
+  }
+
+  td.repo {
+    font-size: 1.0625rem;
+    font-weight: 700;
+  }
 }
 
 /* Media */
