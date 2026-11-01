@@ -699,3 +699,46 @@ $ ls -l public/assets/video public/assets/cv (published media)
     machine has it. `build_media.py` now reads the size from the MP4's track header (`tkhd`) in
     plain Python, so both write the same block; checked against ffprobe on the clip (1280×720)
     and the source (2560×1440).
+
+## Bot & Brew rewrite (1 Nov 2026)
+
+Task: the author's new text for `content/bot-and-brew.md`, the page made from it, a new title,
+captions off by default, the full-length link removed.
+
+### Decisions taken (1 Nov, Bot & Brew rewrite)
+
+1. **`content/bot-and-brew.md`** replaced with the author's text, word for word, from
+   "## Intro" through "...before building the hardware." (the spaces before the closing
+   delimiter dropped). Its own wording is kept as written ("inhouse", "business side things").
+2. **Page text, word for word**: no script in `scripts/` makes this comparison (the grep for
+   `bot-and-brew.md` finds only `check_numbers.py`, which checks numbers, not wording), so, as
+   on 1 Nov, a scratch script compared it: all nine paragraphs of the file appear verbatim on
+   the page (after `&` → `&amp;` and whitespace collapse). The only other text in `<main>` is
+   the h1, the h2s and the player's fallback link "Download the video (MP4)".
+3. **Structure**: intro under the h1; the video section (heading "The latte cycle on video"
+   kept); then "What the kiosk did", "How it went" (`id="how-it-went"`) and "What I take from
+   it" (`id="what-i-take"`) as `<section>`s with h2s, like the existing one. "Intro" and
+   "Video caption" are labels, not shown. The `<p class="aside">` Entrepreneur First paragraph
+   is gone; the `.aside` rule in `site.css` is now unused and was left in place (the
+   stylesheet was not part of the task).
+4. **Title** "Bot & Brew: a robotic coffee kiosk" in `<title>`, h1 and og:title; description and
+   og:description as the task gives them; Home's "More" link reads "Case study: Bot & Brew, a
+   robotic coffee kiosk". `grep -rn "post-mortem\|post mortem" public/ scripts/ data/ content/
+   README.md` returns nothing; CHANGELOG.md and NOTES.md keep the old name as history.
+5. **Captions off by default**: `default` removed from the `<track>`; the track and the `.vtt`
+   stay (cue text unchanged). Checked in headless Chrome: the new page's track mode is
+   `disabled`, the previous commit's was `showing`.
+6. **Figcaption from the file**: `build_media.py` reads the "## Video caption" section of
+   `content/bot-and-brew.md` (whitespace collapsed, HTML-escaped) and exits with an error if the
+   section is missing, so a caption edit is one change in the file plus `build_media.py`, and
+   CI's `--check` catches a page that was not regenerated.
+7. **Full-length link removed** from the page, with the "2 min" entry and its docstring mention
+   in `check_numbers.py`. The Drive file was not touched. `check_links.py` now sees 12
+   external URLs instead of 13.
+8. **check_numbers.py**: nothing in the new text was flagged, so no entry was added. "eight
+   minutes" now counts 2 (caption and "What the kiosk did"). The intro's "Two months" (capital
+   T) is not matched by the lowercase `\btwo months\b`; it has no digit, so it cannot fail and
+   only misses the review inventory. Left as is, so the check is not loosened.
+9. **README** row for `content/bot-and-brew.md` updated to the new section names; CHANGELOG
+   entries added. `sitemap.xml` already has `lastmod` 2026-11-01 for Home and Bot & Brew.
+10. Video, poster, `optimize_media.sh`, CV and the other pages were not touched.

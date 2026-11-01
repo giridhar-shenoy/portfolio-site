@@ -13,10 +13,9 @@ Scanned: visible text, <title>, alt / title / aria-label attributes, and the des
 Open Graph text fields. Not scanned: URLs, file names, image dimensions.
 
 The Bot & Brew page also carries the numbers its author states in content/bot-and-brew.md;
-they are allowed there only, as the group "facts stated by the author", and so is the "2 min"
-in the label of the full-length video link. A number is anything with a digit in it, so only
-the digit-bearing entries can fail; the spelled-out ones (nine bar, two months, ...) are matched
-so that they appear in the inventory for review.
+they are allowed there only, as the group "facts stated by the author". A number is anything
+with a digit in it, so only the digit-bearing entries can fail; the spelled-out ones (nine bar,
+two months, ...) are matched so that they appear in the inventory for review.
 """
 import re
 import sys
@@ -43,7 +42,6 @@ ALLOWED = [
     (r"\b2×", AUTHOR, {BOT_AND_BREW}),
     (r"\bLubanCat 5\b", AUTHOR, {BOT_AND_BREW}),
     (r"\bFR5\b", AUTHOR, {BOT_AND_BREW}),
-    (r"\b2 min\b", "label of the full-length video link", {BOT_AND_BREW}),
     (r"\b30\b", "number: the production arms", {HOME, ORANGEWOOD}),
     (r"\bFebruary 2026\b", "number: Bot & Brew wound down", None),
     (r"\bROS 2\b", "name", None),
