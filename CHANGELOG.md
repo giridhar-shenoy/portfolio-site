@@ -47,6 +47,8 @@ All notable changes to this site are documented here. The format follows
   workshop photo (used with Orangewood's permission, metadata stripped) beside the method lines.
   `site.css`: `.video-embed`, `.photo`, `.photo-right` (floated right above 720 px). The photo year
   is allowed on that page in `check_numbers.py`.
+- Industry work page: a still of MyActuator's team shot (credited and linked to their video)
+  replaces the YouTube embed; the `.video-embed` rule and the video-timestamp allowance are gone.
 - `optimize_media.sh --video SRC` makes the 60 s clip, its poster and captions from the
   full-length video; `check_numbers.py` allows the facts stated in `content/bot-and-brew.md`
   on the Bot & Brew page.
