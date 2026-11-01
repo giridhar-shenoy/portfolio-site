@@ -854,3 +854,41 @@ Orangewood gave written permission on 1 Nov 2026 to use this photo on the site.
    to use this photo on the site.") and in `CONTENT_LICENSE.md` / `THIRD_PARTY.md`.
 3. `check_numbers.py`: `\bopens at 2:58\b`, reason "video timestamp", Orangewood page only.
    Negative test: a bare "2:58" or "3:01" on the page, or the phrase on Home, still fails.
+
+## MyActuator team still replaces the embed (1 Nov 2026)
+
+MyActuator gave permission to use this still on the site.
+
+### Decisions taken (1 Nov, MyActuator still)
+
+1. **Source**: yt-dlp 2026.10.26 installed with `pip install --break-system-packages yt-dlp`
+   (into `~/.local/bin`; it warned that no JavaScript runtime was found, which did not stop the
+   download). `bestvideo[height<=1080][ext=mp4]` gave format 617: 1920×1080 VP9, 50 fps, 199.08 s,
+   65,338,788 B, saved as `media_src/myactuator-video.mp4` (git-ignored, not committed).
+2. **Where the team shot is**: candidates every 0.5 s from 2:56.0 (the previous round's 2:58
+   start, not the prompt's 3:00.0) to 3:06.0. 2:56–2:59.5 is still the award graphic; the shot with
+   the six people and both humanoids runs only from about 3:00.0 to 3:01.22 (a slow pull-back; at
+   3:00.0–3:00.4 the bearded person at the right is not yet in frame), then it cuts to other groups.
+   So the embed's "opens at 2:58" landed about two seconds early. Sampled again every 0.1 s, then
+   every frame (0.02 s) from 3:00.80 to 3:01.28 with a subtitle detector and an edge-variance
+   sharpness score.
+3. **Frame**: the author chose **3:01.06** (candidate A of three; the others were 3:00.94, with
+   the shoulder at the right edge touching the frame edge, and 3:01.20, with a subtitle).
+   3:00.94–3:01.06 fall in a gap between the subtitles "Looking ahead," and "Myactuator will
+   continue…", so the frame has **no subtitle band and no letterbox, and was not cropped**: six
+   people and both humanoids nearly full length, everyone's eyes open, no on-screen text,
+   sharpness on a par with the neighbouring frames, the bearded person 18 px clear of the right
+   edge. Saved losslessly as `media_src/myactuator-team-frame-3m01.06s.png` (identical to the
+   candidate from frame stepping). The alt text's "Giridhar at the right" matches the frame.
+4. **Image**: Pillow, Lanczos 1920×1080 → **1200×675**, JPEG quality 82, optimized,
+   progressive, fresh image with no info carried over: **90,211 B (88.1 KiB)**. Segments: JFIF
+   APP0, quantization and Huffman tables, frame, scan; no EXIF, ICC, XMP or comment.
+5. **Page**: the `<figure class="video-embed">` is replaced by the task's `<figure class="photo">`
+   (width 1200, height 675, `loading="lazy"`); the paragraphs before and after it are unchanged.
+   Full column width, not floated (`.photo img`: `max-width: 100%`, `height: auto`).
+6. **Removed**: the `.video-embed iframe` rule in `site.css`; the `\bopens at 2:58\b` "video
+   timestamp" allowance and its docstring mention in `check_numbers.py` (there was no "3:01"
+   entry; the 2:58 one was its replacement). The page no longer loads anything from YouTube.
+7. `THIRD_PARTY.md` and `CONTENT_LICENSE.md` now name this still (used with MyActuator's
+   permission) beside the Orangewood photo; the embed line is gone. Nothing in `media_src/` was
+   deleted.
