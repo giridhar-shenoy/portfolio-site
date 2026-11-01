@@ -20,7 +20,7 @@ size() { printf '%9d B  %s\n' "$(stat -c %s "$1")" "$1"; }
 VIDEO=public/assets/video/bot-and-brew-60s
 VIDEO_MAX=8000000   # bytes
 POSTER_MAX=150000   # bytes
-CAPTION="One autonomous latte cycle, no human intervention — filmed January 2026, shown at 2× speed."
+CAPTION="One autonomous latte cycle, no human intervention — edited from several angles, shown at 2× speed; filmed January 2026."
 
 video() {
   local src=$1 crf=24 q=2 dur
