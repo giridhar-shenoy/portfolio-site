@@ -37,6 +37,11 @@ All notable changes to this site are documented here. The format follows
   follows) and carries the author's new text, with "How it went" and "What I take from it"
   in place of the Entrepreneur First aside; the video's captions are off unless the viewer
   turns them on; `build_media.py` reads the video caption from `content/bot-and-brew.md`.
+- The Orangewood page becomes "Industry work: Orangewood Labs and MyActuator" (same file and
+  URL; nav label "Industry work" on every page): a line per Orangewood controller on what it
+  does and where it is rebuilt in the open, Orangewood's media (Y Combinator, TechCrunch), and a
+  MyActuator section; Home's About names both employers. `check_numbers.py` allows the two
+  employment-year ranges on that page only.
 - `optimize_media.sh --video SRC` makes the 60 s clip, its poster and captions from the
   full-length video; `check_numbers.py` allows the facts stated in `content/bot-and-brew.md`
   on the Bot & Brew page.

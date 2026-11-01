@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Manipulator controllers at Orangewood Labs — Giridhar J Shenoy</title>
-<meta name="description" content="Gravity-compensation hand guiding and Jacobian-IK TCP jogging controllers on production 6-axis arms at Orangewood Labs, and the public from-scratch rebuild on a simulated UR5e.">
+<title>Industry work: Orangewood Labs and MyActuator — Giridhar J Shenoy</title>
+<meta name="description" content="Manipulator controllers shipped at Orangewood Labs and humanoid manipulation planning at MyActuator: what I did, what is public, and where the same structures are rebuilt in the open.">
 <link rel="canonical" href="https://giridhar-shenoy.github.io/portfolio-site/work/orangewood-controls.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Giridhar J Shenoy">
-<meta property="og:title" content="Manipulator controllers at Orangewood Labs">
-<meta property="og:description" content="Hand guiding and TCP jogging controllers on production 6-axis arms, and the public rebuild on a simulated UR5e.">
+<meta property="og:title" content="Industry work: Orangewood Labs and MyActuator">
+<meta property="og:description" content="Manipulator controllers shipped at Orangewood Labs and humanoid manipulation planning at MyActuator: what I did, what is public, and where the same structures are rebuilt in the open.">
 <meta property="og:url" content="https://giridhar-shenoy.github.io/portfolio-site/work/orangewood-controls.html">
 <meta property="og:image" content="https://giridhar-shenoy.github.io/portfolio-site/assets/img/og.png">
 <meta property="og:image:width" content="1200">
@@ -31,7 +31,7 @@
 <ul>
 <li><a href="../">Home</a></li>
 <li><a href="../repos.html">Repos</a></li>
-<li><a href="orangewood-controls.html" aria-current="page">Orangewood controls</a></li>
+<li><a href="orangewood-controls.html" aria-current="page">Industry work</a></li>
 <li><a href="bot-and-brew.html">Bot &amp; Brew</a></li>
 </ul>
 </nav>
@@ -39,12 +39,26 @@
 </header>
 
 <main id="main" class="wrap">
-<h1>Manipulator controllers at Orangewood Labs</h1>
-<p>At Orangewood Labs I designed and shipped two controllers on 30 production 6-axis arms: a gravity-compensation hand-guiding controller (inverse dynamics to joint torques) and a Jacobian-IK TCP jogging controller. Both stayed in service until the next hardware generation. I also built the joint-space trajectory-tracking controller that runs underneath them, and the OPC-UA bridge between the robot controller and the Siemens PLC/HMI.</p>
-<p>Orangewood's own public page: <a href="https://www.ycombinator.com/companies/orangewood-labs">Orangewood Labs on Y Combinator</a>.</p>
+<h1>Industry work: Orangewood Labs and MyActuator</h1>
 
-<h2 id="code-and-results">Code and results</h2>
-<p><a href="https://github.com/giridhar-shenoy/ur5e-teaching-controllers">ur5e-teaching-controllers</a> is a from-scratch public build of the same control structures on a UR5e in simulation.</p>
+<h2 id="orangewood">Orangewood Labs, Delhi — 2022 to 2024</h2>
+<p>At Orangewood Labs I designed and shipped two controllers on 30 production 6-axis arms: a gravity-compensation hand-guiding controller (inverse dynamics to joint torques) and a Jacobian-IK TCP jogging controller. Both stayed in service until the next hardware generation. I also built the joint-space trajectory-tracking controller that runs underneath them, and the OPC-UA bridge between the robot controller and the Siemens PLC/HMI.</p>
+<p>What each controller does, and where the same structure is built in the open:</p>
+<ul>
+<li><strong>Gravity-compensation hand guiding.</strong> The controller computes, from the arm's dynamic model, the joint torques that hold the arm against gravity, so a person can move it by hand and it stays where it is left. Public rebuild: the hand-guiding controller in <a href="https://github.com/giridhar-shenoy/ur5e-teaching-controllers">ur5e-teaching-controllers</a>.</li>
+<li><strong>Jacobian-IK TCP jogging.</strong> A commanded tool velocity from the pendant or HMI is mapped to joint velocities through the Jacobian, with damping near singularities. Public rebuild: the jogging controller in <a href="https://github.com/giridhar-shenoy/ur5e-teaching-controllers">ur5e-teaching-controllers</a>.</li>
+<li><strong>Joint-space trajectory tracking.</strong> The loop that executes programmed motions underneath both. Public rebuild: the tracking controllers in <a href="https://github.com/giridhar-shenoy/ur5e-teaching-controllers">ur5e-teaching-controllers</a>.</li>
+<li><strong>OPC-UA bridge.</strong> Exposes the robot controller's I/O and modes to a Siemens PLC and HMI over OPC-UA. No public rebuild.</li>
+</ul>
+<p>Orangewood's own media:</p>
+<ul>
+<li><a href="https://www.ycombinator.com/companies/orangewood-labs">Orangewood Labs on Y Combinator</a></li>
+<li><a href="https://techcrunch.com/2023/08/02/orangewood-wants-to-build-a-cheap-programmable-robotic-arm-for-manufacturing/">TechCrunch on Orangewood Labs</a></li>
+</ul>
+
+<h2 id="myactuator">MyActuator, China — 2024 to 2025</h2>
+<p>At MyActuator I was lead robotics software engineer on a humanoid. I led the ROS 2 architecture and the manipulation planning: OMPL constrained planning on depth-camera point clouds, KDL Cartesian trajectories, IK and Jacobian mapping from task space to joint space, and real-time human-to-robot upper-body motion retargeting from camera-based skeletal tracking.</p>
+<p>MyActuator has not published this work, so there is nothing of it to show here. The planning structure is rebuilt in the open in <a href="https://github.com/giridhar-shenoy/pointcloud-constrained-planning">pointcloud-constrained-planning</a>.</p>
 </main>
 
 <footer class="site-footer">
