@@ -4,15 +4,19 @@ player or link, and the build passes either way.
   python3 scripts/build_media.py           # rewrite the slots from what is on disk
   python3 scripts/build_media.py --check   # exit 1 if a slot does not match the files (CI)
 
-Slots: the 60 s Bot & Brew video (mp4 + poster + WebVTT captions) and the CV (PDF). The Home
-"Watch 60 s" button follows the video (a TODO while the video is missing).
+Slots: the 60 s Bot & Brew video (mp4 + poster + WebVTT captions, off unless the viewer turns
+them on) and the CV (PDF). The video's caption is the "Video caption" section of
+content/bot-and-brew.md. The Home "Watch 60 s" button follows the video (a TODO while the video
+is missing).
 """
 import argparse
+import html
 import os
+import re
 import struct
 import sys
 
-from sitelib import PUBLIC, replace_block, write_or_check
+from sitelib import PUBLIC, ROOT, replace_block, write_or_check
 
 VIDEO = {
     "mp4": "assets/video/bot-and-brew-60s.mp4",
@@ -20,6 +24,15 @@ VIDEO = {
     "vtt": "assets/video/bot-and-brew-60s.en.vtt",
 }
 CV = "assets/cv/giridhar-shenoy-cv.pdf"
+CONTENT = ROOT / "content" / "bot-and-brew.md"
+
+
+def video_caption():
+    """The "## Video caption" section of the author's text, as one line of HTML-escaped text."""
+    m = re.search(r"^## Video caption\n(.*?)(?=^## |\Z)", CONTENT.read_text(encoding="utf-8"), re.M | re.S)
+    if not m or not m.group(1).strip():
+        sys.exit(f"build_media: no '## Video caption' section in {CONTENT.relative_to(ROOT)}")
+    return html.escape(" ".join(m.group(1).split()), quote=False)
 
 
 def boxes(f, end):
@@ -77,10 +90,10 @@ Add them (raw footage can go in <code>public/assets/video/src/</code> for
 <figure>
 <video controls preload="metadata" playsinline poster="{up}{VIDEO['poster']}"{dims}>
 <source src="{up}{VIDEO['mp4']}" type="video/mp4">
-<track kind="captions" src="{up}{VIDEO['vtt']}" srclang="en" label="English" default>
+<track kind="captions" src="{up}{VIDEO['vtt']}" srclang="en" label="English">
 <a href="{up}{VIDEO['mp4']}">Download the video (MP4)</a>
 </video>
-<figcaption>One autonomous cycle, edited from several camera angles and shown at 2× speed; nobody touched the cell during the run, and the whole cycle took about eight minutes. Filmed January 2026 in our workshop in Fort Kochi. The full-length version is linked below.</figcaption>
+<figcaption>{video_caption()}</figcaption>
 </figure>
 """
 

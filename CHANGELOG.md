@@ -33,11 +33,17 @@ All notable changes to this site are documented here. The format follows
   "What the kiosk did", Entrepreneur First paragraph), the 60 s video at 2× speed with poster
   and captions, and the link to the full-length version; no TODO blocks left on the site.
 - Home links the CV (PDF).
+- Bot & Brew rewrite: the page is titled "Bot & Brew: a robotic coffee kiosk" (Home's link
+  follows) and carries the author's new text, with "How it went" and "What I take from it"
+  in place of the Entrepreneur First aside; the video's captions are off unless the viewer
+  turns them on; `build_media.py` reads the video caption from `content/bot-and-brew.md`.
 - `optimize_media.sh --video SRC` makes the 60 s clip, its poster and captions from the
   full-length video; `check_numbers.py` allows the facts stated in `content/bot-and-brew.md`
   on the Bot & Brew page.
 
 ### Removed
 
+- The link to the full-length Bot & Brew video (Google Drive) and its "2 min" allowance in
+  `check_numbers.py`.
 - humanoid-upper-body-retargeting from the Home cards and the Repos table (it stays private),
   with its GIF and still.

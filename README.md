@@ -26,7 +26,7 @@ depth), so its stylesheet and links only resolve on the deployed site.
 | `public/` | The site exactly as published: five pages, `robots.txt`, `sitemap.xml`, `site.webmanifest`, `assets/` |
 | `data/repos.json` | The repos on the site: one line, stack, hero GIF source and commit (schema below) |
 | `scripts/build_repos.py` | Writes the Home cards and the `repos.html` table from `data/repos.json`; `--refresh-heroes` copies the GIFs from the local clones |
-| `content/bot-and-brew.md` | The author's text of the Bot & Brew page (intro, video caption, sections, Entrepreneur First paragraph); the page is that text converted to HTML by hand, word for word |
+| `content/bot-and-brew.md` | The author's text of the Bot & Brew page (intro, video caption, "What the kiosk did", "How it went", "What I take from it"); the page is that text converted to HTML by hand, word for word, except the caption, which `build_media.py` reads from the file |
 | `scripts/build_media.py` | Fills the video and CV slots: a TODO block while a file is missing, the player or link once it exists; the Home "Watch 60 s" button follows the video |
 | `scripts/build_site.py` | Writes `_site/`, the published copy: `public/` without the TODO blocks (see below) |
 | `scripts/optimize_media.sh` | GIF → still (WebP) for the cards; `--video SRC`: the full-length video → the 60 s clip at 2× speed (≤ 8 MB), its poster (≤ 150 KB) and captions |
