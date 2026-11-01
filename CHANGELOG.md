@@ -42,6 +42,11 @@ All notable changes to this site are documented here. The format follows
   does and where it is rebuilt in the open, Orangewood's media (Y Combinator, TechCrunch), and a
   MyActuator section; Home's About names both employers. `check_numbers.py` allows the two
   employment-year ranges on that page only.
+- Industry work page, final: retitled "Industry work: MyActuator and Orangewood Labs", MyActuator
+  first with MyActuator's own YouTube video embedded (youtube-nocookie), Orangewood second with a
+  workshop photo (used with Orangewood's permission, metadata stripped) beside the method lines.
+  `site.css`: `.video-embed`, `.photo`, `.photo-right` (floated right above 720 px). The photo year
+  is allowed on that page in `check_numbers.py`.
 - `optimize_media.sh --video SRC` makes the 60 s clip, its poster and captions from the
   full-length video; `check_numbers.py` allows the facts stated in `content/bot-and-brew.md`
   on the Bot & Brew page.
