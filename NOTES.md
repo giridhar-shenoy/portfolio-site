@@ -742,3 +742,39 @@ captions off by default, the full-length link removed.
 9. **README** row for `content/bot-and-brew.md` updated to the new section names; CHANGELOG
    entries added. `sitemap.xml` already has `lastmod` 2026-11-01 for Home and Bot & Brew.
 10. Video, poster, `optimize_media.sh`, CV and the other pages were not touched.
+
+## Industry work page (1 Nov 2026)
+
+Task: the Orangewood page becomes "Industry work: Orangewood Labs and MyActuator", with a line
+per controller, Orangewood's media and a MyActuator section; Home's About names both employers.
+
+### Decisions taken (1 Nov, Industry work)
+
+1. **File and URL kept**: `public/work/orangewood-controls.html` (linked, in the sitemap);
+   `sitemap.xml` `lastmod` for it → 2026-11-01. Title, h1 and og:title, description and
+   og:description as the task gives them. Nav label "Industry work" on all five pages (the nav is
+   hand-written in each page; no script generates it).
+2. **Page text, word for word**: a scratch script compared every h1/h2/p/li of the published page
+   with the task's text, in order: identical. The first paragraph is unchanged. h2 ids added for
+   anchors (`orangewood`, `myactuator`), as the page's old h2 had one. The "Code and results" h2
+   and its sentence are gone; with them the page no longer mentions the UR5e.
+3. **Repo links**: every occurrence of a repo name links to `https://github.com/giridhar-shenoy/<repo>`,
+   the URL the Repos page uses (three for ur5e-teaching-controllers, one for
+   pointcloud-constrained-planning), as plain anchors without the table's `<wbr>` breaks.
+4. **Media links**: TechCrunch is the 2 Aug 2023 article
+   https://techcrunch.com/2023/08/02/orangewood-wants-to-build-a-cheap-programmable-robotic-arm-for-manufacturing/
+   (found by search, 200 with the trailing slash). **No demo video**: the task left
+   `<DEMO_VIDEO_URL>` as a placeholder and I found no video Orangewood links itself (YC company
+   and launch pages, orangewood.co); the author chose to ship without that item. Add it as one
+   more `<li>` in "Orangewood's own media" when there is a URL. Links only; nothing of either
+   employer's product is embedded.
+5. **check_numbers.py**: the four flagged tokens (2022, 2024, 2024, 2025) are allowed as the two
+   ranges, `\b2022 to 2024\b` and `\b2024 to 2025\b`, reason "employment years, as on the CV",
+   Orangewood page only; not as bare years, so a stray year anywhere still fails. Docstring rule
+   updated. Negative test on a scratch copy (`SITE_ROOT`): "since 2024", "12 arms", "2024 to
+   2026" on the page and "2022 to 2024" on Home all failed (6 disallowed, exit 1).
+6. **Home**: only the nav label, the About sentence and the "More" item changed.
+7. **Rules checked**: no "Simulink" or "auto-tuner" anywhere in `public/`; the page has no video,
+   image, GIF or iframe and no sentence about applying or hiring. Home's About still ends with
+   "open to engineering seats at robotics companies and research-engineer seats in labs alike"
+   (unchanged, as the task said nothing else on Home changes).
