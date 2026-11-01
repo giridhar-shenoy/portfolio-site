@@ -80,7 +80,7 @@ Add them (raw footage can go in <code>public/assets/video/src/</code> for
 <track kind="captions" src="{up}{VIDEO['vtt']}" srclang="en" label="English" default>
 <a href="{up}{VIDEO['mp4']}">Download the video (MP4)</a>
 </video>
-<figcaption>One autonomous cycle, filmed from several angles in January 2026 in our workshop in Fort Kochi; nobody touched the cell during the run. Shown at 2× speed. The full-length version is linked below.</figcaption>
+<figcaption>One autonomous cycle, edited from several camera angles and shown at 2× speed; nobody touched the cell during the run, and the whole cycle took about eight minutes. Filmed January 2026 in our workshop in Fort Kochi. The full-length version is linked below.</figcaption>
 </figure>
 """
 

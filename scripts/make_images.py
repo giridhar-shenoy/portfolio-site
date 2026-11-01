@@ -13,7 +13,7 @@ from sitelib import PUBLIC
 FONT_DIR = "/usr/share/fonts/truetype/dejavu/"
 BG, FG, MUTED = "#1f4e79", "#ffffff", "#cfe0f1"
 NAME = "Giridhar J Shenoy"
-TAGLINE = ("Robotics engineer — manipulator control and ROS 2 systems. Controllers running on 30 production "
+TAGLINE = ("Robotics engineer — manipulator control and ROS 2 systems. Controllers shipped on 30 production "
            "arms; humanoid planning and retargeting; moving into learning-based manipulation.")
 OUT = PUBLIC / "assets" / "img"
 
