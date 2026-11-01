@@ -892,3 +892,33 @@ MyActuator gave permission to use this still on the site.
 7. `THIRD_PARTY.md` and `CONTENT_LICENSE.md` now name this still (used with MyActuator's
    permission) beside the Orangewood photo; the embed line is gone. Nothing in `media_src/` was
    deleted.
+
+## Employer legal name for the March–August 2026 job (1 Nov 2026)
+
+The appointment letter for the March–August 2026 job is from Amrita Vishwa Vidyapeetham (post:
+AI Project Manager); the lab was only recently named Maitri Labs. Everywhere public the employer
+now reads **Amrita Vishwa Vidyapeetham (Maitri Labs, AIMS Hospital)**. Title and dates
+(March 2026 – August 2026) unchanged. Commit `d6b02b3`.
+
+### Decisions taken (1 Nov, employer name)
+
+1. **Search**: `grep -rniI -e maitri -e "AIMS Hospital"` from `~/work` (excluding `.git`,
+   `node_modules`, `_site`, `build`, `install`, `log`) and in the profile repo. The profile repo is
+   `~/work/p0/profile` (remote `giridhar-shenoy/giridhar-shenoy`); the suggested
+   `find ~ -maxdepth 4 -name .git | grep -i giridhar` misses it because its path has no
+   "giridhar". A fresh clone of origin (two commits ahead of the local copy) was grepped too.
+2. **Public hits**: only the CV, docx paragraph 13 (and the two PDFs exported from it). No site
+   page, data file, repo README or the profile README names this employer; the Bot & Brew page
+   deliberately does not and was not touched.
+3. **History hits, not edited**: `~/work/resume/resume.md:27,108` (the 31 Oct Prompt-1 report,
+   not in git, not published) and the text extracts `old_text.txt:7`, `new_text.txt:15`,
+   `v1_text.txt:7` in `~/work/resume`.
+4. **CV**: python-docx, run text edited in place. "Maitri-Labs (AIMS Hospital)" occurred once,
+   inside one run (`'  |  Maitri-Labs (AIMS Hospital), Kochi, India'`), so no runs were merged;
+   the bullet under the heading is unchanged. Exported with LibreOffice 26.2.6.3: still 2 pages;
+   the `pdftotext` diff against the previous site PDF is the employer line only, no new wrap.
+   "30 production", "September 2026 – November 2026" and the site URL are still present.
+5. **Checks**: every check in `scripts/` and the build passed; nothing was loosened.
+6. **Live**: check and deploy workflows succeeded; the live PDF (md5
+   `524a21d70677f9a7ecce47b56b59452a`) is byte-identical to the committed one and its text has
+   "Amrita Vishwa Vidyapeetham (Maitri" at line 33, on the first try.
