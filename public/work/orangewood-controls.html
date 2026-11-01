@@ -44,15 +44,15 @@
 <h2 id="myactuator">MyActuator, China — 2024 to 2025</h2>
 <p>At MyActuator I was lead robotics software engineer on a humanoid. I led the ROS 2 architecture and the manipulation planning: OMPL constrained planning on depth-camera point clouds, KDL Cartesian trajectories, IK and Jacobian mapping from task space to joint space, and real-time human-to-robot upper-body motion retargeting from camera-based skeletal tracking.</p>
 <figure class="video-embed">
-<iframe src="https://www.youtube-nocookie.com/embed/0hYw6lilqxE" title="MyActuator humanoid team video" width="560" height="315" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
-<figcaption>MyActuator's own video of the humanoid team, from <a href="https://www.youtube.com/@actuatormy8760">their YouTube channel</a>.</figcaption>
+<iframe src="https://www.youtube-nocookie.com/embed/0hYw6lilqxE?start=178" title="MyActuator humanoid team video" width="560" height="315" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+<figcaption>MyActuator's company video, from <a href="https://www.youtube.com/@actuatormy8760">their YouTube channel</a>. The player opens at 2:58, the team shot with me in it (I'm the one with the beard).</figcaption>
 </figure>
 <p>The planning and architecture work itself is not public; the planning structure is rebuilt in the open in <a href="https://github.com/giridhar-shenoy/pointcloud-constrained-planning">pointcloud-constrained-planning</a>.</p>
 
 <h2 id="orangewood">Orangewood Labs, Delhi — 2022 to 2024</h2>
 <figure class="photo photo-right">
 <img src="../assets/img/orangewood-arms.jpg" alt="Giridhar with Orangewood arms in the workshop" width="540" height="1200" loading="lazy">
-<figcaption>With Orangewood arms in the workshop, 2023. Photo used with Orangewood's permission.</figcaption>
+<figcaption>With Orangewood arms in the workshop, 2023.</figcaption>
 </figure>
 <p>At Orangewood Labs I designed and shipped two controllers on 30 production 6-axis arms: a gravity-compensation hand-guiding controller (inverse dynamics to joint torques) and a Jacobian-IK TCP jogging controller. Both stayed in service until the next hardware generation. I also built the joint-space trajectory-tracking controller that runs underneath them, and the OPC-UA bridge between the robot controller and the Siemens PLC/HMI.</p>
 <p>What each controller does, and where the same structure is built in the open:</p>

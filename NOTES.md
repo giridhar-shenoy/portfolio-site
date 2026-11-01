@@ -843,3 +843,14 @@ Orangewood gave written permission on 1 Nov 2026 to use this photo on the site.
     captions are exactly the task's; no sentence about applying or hiring on the page. Home's
     About still ends "open to engineering seats at robotics companies and research-engineer seats
     in labs alike" (unchanged, see the previous section).
+
+## Video start and caption wording (1 Nov 2026)
+
+1. The MyActuator embed opens at 2:58 (`?start=178`), the team shot; its caption is the author's
+   new wording with "opens at 2:58". (The prompt's caption said 3:01 with `start=181`; the author
+   corrected it to 2:58.)
+2. The photo caption is now "With Orangewood arms in the workshop, 2023."; the permission note
+   leaves the page and stays recorded above ("Orangewood gave written permission on 1 Nov 2026
+   to use this photo on the site.") and in `CONTENT_LICENSE.md` / `THIRD_PARTY.md`.
+3. `check_numbers.py`: `\bopens at 2:58\b`, reason "video timestamp", Orangewood page only.
+   Negative test: a bare "2:58" or "3:01" on the page, or the phrase on Home, still fails.
