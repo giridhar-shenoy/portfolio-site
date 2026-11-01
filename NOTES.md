@@ -778,3 +778,68 @@ per controller, Orangewood's media and a MyActuator section; Home's About names 
    image, GIF or iframe and no sentence about applying or hiring. Home's About still ends with
    "open to engineering seats at robotics companies and research-engineer seats in labs alike"
    (unchanged, as the task said nothing else on Home changes).
+
+## Industry work page, final (1 Nov 2026)
+
+Task (prompt 5, superseding prompts 3, 3b and 4): MyActuator first with MyActuator's own video,
+Orangewood second with the workshop photo and the method lines.
+
+Orangewood gave written permission on 1 Nov 2026 to use this photo on the site.
+
+### Decisions taken (1 Nov, Industry work final)
+
+1. **Photo**: the original (`IMG-20230925-WA0007.jpg.jpeg`, 576×1280, 109,192 B) is copied to
+   `media_src/orangewood-arms-original.jpeg`; `/media_src/` is added to `.gitignore`, so the
+   original is never committed. It already had no EXIF, GPS, ICC or XMP (WhatsApp strips them).
+   `public/assets/img/orangewood-arms.jpg` was made with Pillow: orientation applied, a fresh RGB
+   image (no info carried over), Lanczos to a 1200 px longer side, JPEG quality 82, optimized,
+   progressive, saved with no exif/icc/comment. Result: **540×1200, 117,456 B (114.7 KiB)**, under
+   200 KB at the first quality tried. Verified by walking the JPEG segments: only the JFIF APP0
+   header (density 1×1), quantization and Huffman tables, frame and scan; no APP1 (EXIF/XMP), APP2
+   (ICC) or COM. No crop.
+2. **Placeholders**: `<SS>` and `<M:SS>` were not filled, so the iframe has no `?start=` and the
+   figcaption ends at "their YouTube channel." without the "I appear at" sentence.
+   `<DEMO_VIDEO_URL>` was not filled: bullet dropped. `<TECHCRUNCH_URL>` was also left as a
+   placeholder in this prompt, but the TechCrunch link was found, checked and accepted in the
+   previous round (live since 571bf2c), so it stays; drop it if that was not intended.
+3. **Video**: oEmbed confirms 0hYw6lilqxE is "Myactuator Company Introduction." by "Actuator My"
+   (`https://www.youtube.com/@actuatormy8760`, the channel linked in the caption) and is
+   embeddable. Nothing was downloaded from YouTube. Neither `check_public.py` (repo visibility
+   only) nor the README spec ("no framework, no build tool, no analytics") forbids a third-party
+   iframe, so the embed is used, not the fallback link; `check_links.py` HEAD-checks the iframe
+   `src` (200).
+4. **`loading="lazy"` removed from the iframe**: the pinned validator (html5validator 0.4.2,
+   also in CI) rejects `loading` on `<iframe>` ("Attribute loading not allowed on element iframe
+   at this point"); the attribute is in the current HTML standard but newer than that validator.
+   The validator was not loosened. The video is the first thing in `<main>`, so on desktop it is
+   in the first viewport and would have loaded at once anyway. The `<img>` keeps
+   `loading="lazy"`.
+5. **CSS**: the task's three rules, plus `display: block` and `border: 0` on the iframe (no
+   default inset border) and `display: block` on `.photo img`; `.photo-right img { width: 100% }`
+   below 721 px (full width above the text); from 721 px `.photo-right` floats right,
+   `max-width: 34%`, `margin-left: 1.5rem`. To keep the float inside its page and section:
+   `main { display: flow-root }` and `main h2 { clear: both }` (nothing else on the site floats).
+6. **Previews** (headless Chrome, fresh profile each time; a reused profile had served the old
+   cached stylesheet): Industry work at 1280 px: full-width 16:9 video, photo floated right beside
+   the Orangewood paragraph and list. At 390 px: video full width, photo full width above the text
+   (about 358×796 px, nearly a phone screen tall, as specified).
+7. **Home photo left out**: at 390 px the portrait filled about a whole phone screen right under
+   "About", pushing the About text and CV link a screen down. At 1280 px it sat well beside the
+   paragraph. Per the task, Home has no photo. Home's only change in this round: the "More" item
+   "Industry work: MyActuator and Orangewood Labs". The About sentence was already the task's.
+8. **check_numbers.py**: the one new flagged token was "2023." in the photo caption. Allowed as
+   `\bworkshop, 2023\b` on this page only, beside the two ranges; all three carry the reason
+   "employment and photo years, as on the CV". Bare years are still not allowed. Negative test on
+   a scratch copy: "No public rebuild in 2023." on the page and "In the workshop, 2023," on Home
+   both failed (exit 1).
+9. **Placeholder grep**: `grep -rn "post-mortem\|TODO\|<SS>\|<M:SS>\|<TECHCRUNCH\|<DEMO" public/`
+   finds nothing in any HTML page. Its only hits are `site.css:401` and `:420`, the existing
+   comment and `content: "TODO"` label that style TODO blocks (the mechanism README describes).
+   They were left as they are.
+10. **Licence notes**: `CONTENT_LICENSE.md` claimed every image under `public/assets/` as the
+    author's, and `THIRD_PARTY.md` said "None". Both now name the photo (used with Orangewood's
+    written permission) as the exception; `THIRD_PARTY.md` also notes the YouTube embed.
+11. **Rules checked**: no other image added; no "Simulink" or "auto-tuner" in `public/`; alt and
+    captions are exactly the task's; no sentence about applying or hiring on the page. Home's
+    About still ends "open to engineering seats at robotics companies and research-engineer seats
+    in labs alike" (unchanged, see the previous section).
