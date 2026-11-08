@@ -4,8 +4,9 @@
 
 The rule: the only numbers on the site are 30 (the production arms, on the Home page and the
 Orangewood page), February 2026 and, on the Orangewood page, the employment years ("2022 to
-2024", "2024 to 2025") and the photo year ("workshop, 2023"), as on the CV, unless they sit inside
-a visible TODO block. Digits that
+2024", "2024 to 2025") and the photo year ("workshop, 2023"), as on the CV, and the Piper-H
+hand-guiding numbers (kp = kd = 0, 100 Hz, 30 s on the Home card; 2026 on the Orangewood page),
+as in the ur5e-teaching-controllers README, unless they sit inside a visible TODO block. Digits that
 are part of a name (ROS 2, MoveIt 2, UR5e, Unitree G1, ros2_control, pybind11,
 ur5e-teaching-controllers, MP4), the "6-axis" in the Orangewood
 paragraph, the copyright year in the footer and the "60 s" label of the video are listed
@@ -44,6 +45,10 @@ ALLOWED = [
     (r"\b2×", AUTHOR, {BOT_AND_BREW}),
     (r"\bLubanCat 5\b", AUTHOR, {BOT_AND_BREW}),
     (r"\bFR5\b", AUTHOR, {BOT_AND_BREW}),
+    (r"\bkp = kd = 0\b", "Piper-H hand-guiding result, as in the ur5e-teaching-controllers README", {HOME}),
+    (r"\b100 Hz\b", "Piper-H hand-guiding result, as in the ur5e-teaching-controllers README", {HOME}),
+    (r"\b30 s hands-off\b", "Piper-H hand-guiding result, as in the ur5e-teaching-controllers README", {HOME}),
+    (r"\breproduced in 2026\b", "Piper-H hand-guiding result, as in the ur5e-teaching-controllers README", {ORANGEWOOD}),
     (r"\b30\b", "number: the production arms", {HOME, ORANGEWOOD}),
     (r"\b2022 to 2024\b", "employment and photo years, as on the CV", {ORANGEWOOD}),
     (r"\b2024 to 2025\b", "employment and photo years, as on the CV", {ORANGEWOOD}),

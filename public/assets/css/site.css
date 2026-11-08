@@ -201,6 +201,10 @@ h3 {
   list-style: none;
 }
 
+.cards + .cards {
+  margin-top: var(--gutter);
+}
+
 @media (min-width: 40rem) {
   .cards {
     grid-template-columns: 1fr 1fr;

@@ -53,7 +53,7 @@
 <img src="assets/img/ur5e-teaching-controllers.webp" width="640" height="480" alt="Still from the hero GIF: a simulated UR5e in Gazebo switching between trajectory tracking and gravity-compensated hand guiding" decoding="async">
 <div class="body">
 <h3><a href="https://github.com/giridhar-shenoy/ur5e-teaching-controllers">ur5e-teaching-controllers</a></h3>
-<p>ros2_control effort controllers for a simulated UR5e: joint-space tracking (PID, PID with RNEA feedforward, computed torque) on Pinocchio or KDL dynamics, gravity-compensated hand guiding with a runtime payload model, and damped-least-squares TCP jogging.</p>
+<p>ros2_control effort controllers for a simulated UR5e: joint-space tracking (PID, PID with RNEA feedforward, computed torque) on Pinocchio or KDL dynamics, gravity-compensated hand guiding with a runtime payload model, and damped-least-squares TCP jogging. Also runs on a real arm (AgileX Piper-H, zero stiffness).</p>
 <p class="more"><a href="assets/img/ur5e-teaching-controllers.gif">Animated GIF</a></p>
 </div>
 </li>
@@ -75,6 +75,15 @@
 </li>
 </ul>
 <!-- build_repos:cards:end -->
+<ul class="cards">
+<li class="card">
+<a href="assets/img/piper-handguide.gif"><img src="assets/img/piper-handguide.webp" width="640" height="480" alt="Still from the hand-guiding clip: an AgileX Piper-H arm moved by hand" loading="lazy" decoding="async"></a>
+<div class="body">
+<p>Zero-stiffness hand guiding on a real arm. AgileX Piper-H, drivers at kp = kd = 0, every torque computed on the laptop at 100 Hz. Feed-forward gains identified on the arm; 30 s hands-off hold with no measurable drift.</p>
+<p class="more"><a href="https://github.com/giridhar-shenoy/ur5e-teaching-controllers/releases/download/media-2026-11/gravity_comp.mp4">clip</a> · <a href="https://github.com/giridhar-shenoy/ur5e-teaching-controllers#on-a-real-arm-zero-stiffness-hand-guiding-on-an-agilex-piper-h">how it was measured</a></p>
+</div>
+</li>
+</ul>
 
 <h2 id="bot-and-brew">Bot &amp; Brew</h2>
 <!-- build_media:watch:begin -->

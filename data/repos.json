@@ -4,7 +4,7 @@
     {
       "name": "ur5e-teaching-controllers",
       "url": "https://github.com/giridhar-shenoy/ur5e-teaching-controllers",
-      "one_line": "ros2_control effort controllers for a simulated UR5e: joint-space tracking (PID, PID with RNEA feedforward, computed torque) on Pinocchio or KDL dynamics, gravity-compensated hand guiding with a runtime payload model, and damped-least-squares TCP jogging.",
+      "one_line": "ros2_control effort controllers for a simulated UR5e: joint-space tracking (PID, PID with RNEA feedforward, computed torque) on Pinocchio or KDL dynamics, gravity-compensated hand guiding with a runtime payload model, and damped-least-squares TCP jogging. Also runs on a real arm (AgileX Piper-H, zero stiffness).",
       "stack": "C++ for the control loop (controllers, dynamics backends); Python for orchestration and plots. ROS 2 Lyrical, ros2_control, Gazebo Jetty, Pinocchio, KDL.",
       "hero": {
         "local_clone": "~/work/r1",
